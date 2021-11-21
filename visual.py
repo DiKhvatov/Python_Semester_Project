@@ -28,11 +28,32 @@ class Drawer:
         pg.display.update()
 
 
-def init_ui(screen):
+def stop_execution():
+    pass
 
+def pause_execution():
+    pass
+
+def start_execution():
+    pass
+
+def new_game():
+    pass
+
+def handle_events(events, menu):
+    global alive
+    for event in events:
+        menu.react(event)
+
+
+def init_ui(screen):
+    '''
+    Инициализация графического интерфейса 
+    '''
     button_stop = thorpy.make_button("Quit", func=stop_execution)
     button_pause = thorpy.make_button("Pause", func=pause_execution)
     button_play = thorpy.make_button("Play", func=start_execution)
+    timer = thorpy.OneLineText("Time: ")
     rounds = thorpy.OneLineText("Round: ")
     score = thorpy.OneLineText("Score: ")
     button_new_game = thorpy.make_button(text="New game", func=new_game)

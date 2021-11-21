@@ -3,12 +3,18 @@ import pygame as pg
 
 
 class Bullet:
+    '''
+
+    '''
     def __init__(self, x, y, shooting_angle, v):
         self.x = x
         self.y = y
         self.angle = shooting_angle
         self.v = v
         self.existion = True
+        self.counter = 0
+        self.color = (0,0,255)
+        self.r = 5
 
     def checking_breakthrough(self, tanks):
         for tank in tanks:
@@ -16,6 +22,19 @@ class Bullet:
             if tank.r > distance:
                 tank.breakthrough()
                 self.existion = False
+
+    def move(self, delta):
+        self.x += self.v * np.cos(self.angle) * delta
+        self.y += self.v * np.sin(self.angle) * delta
+
+    def draw(self, surface):
+        pg.draw.circle(surface, self.color, (self.x, self.y), self.r)
+
+    def wall_collision(self, wall_x_left, wall_x_right, wall_y_up, wall_y_down):
+        if self.x < wall_x_left or self.x > wall_x_right or self.y < wall_y_up or self.y > wall_y_down:
+            self.existion = False
+
+
 
 
 class Tank:
@@ -34,21 +53,22 @@ class Tank:
         """
         инициализация
         """
-        self.x = 0
-        self.y = 0
+        self.x = 50
+        self.y = 200
         self.v = 0
         self.a = 0
+        self.w = 0
         self.angle = 0
-        self.r = 5
-        self.color = (255, 255, 255)
+        self.r = 50
+        self.color = (255, 255, 0)
 
     def move(self, delta):
         """
         Изменения скорости, координат и угла поворота за малое время delta
         """
         self.v += self.a * delta
-        self.x += self.v * delta * np.cos(angle)
-        self.y += self.v * delta * np.sin(angle)
+        self.x += self.v * delta * np.cos(self.angle)
+        self.y += self.v * delta * np.sin(self.angle)
         self.angle += self.w * delta
 
     def start_acceleration_forward(self, acceleration):
@@ -79,8 +99,7 @@ class Tank:
         self.w = 0
 
     def draw(self, surface):
-        # TODO: что-то мне лень пока что
-        pass
+        pg.draw.circle(surface, self.color, (self.x, self.y), self.r)
 
 
 class Target:
