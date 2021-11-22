@@ -53,14 +53,15 @@ class Tank:
         """
         инициализация
         """
-        self.x = 50
-        self.y = 200
+        self.x = 0
+        self.y = 0
         self.v = 0
         self.a = 0
         self.w = 0
         self.angle = 0
         self.r = 50
-        self.color = (255, 255, 0)
+        self.color = (0, 255, 0)
+        self.color_2 = (255, 0, 0)
 
     def move(self, delta):
         """
@@ -100,6 +101,7 @@ class Tank:
 
     def draw(self, surface):
         pg.draw.circle(surface, self.color, (self.x, self.y), self.r)
+        pg.draw.circle(surface, self.color_2, (self.x + self.r * np.cos(self.angle) , self.y+ self.r * np.sin(self.angle) ), self.r / 5)
 
 
 class Target:

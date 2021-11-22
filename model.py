@@ -4,6 +4,5 @@ import thorpy
 
 from objects import *
 
-def execution(delta, bullets, targets,  tanks, player_tank, screen):
+def execution(delta, bullets, targets,  tanks, player_tank):
     player_tank.move(delta)
-    player_tank.draw(screen)

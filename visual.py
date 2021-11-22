@@ -19,9 +19,11 @@ class Drawer:
         self.screen = screen
 
     def update(self, figures, ui):
+
         self.screen.fill((0, 0, 0))
         for figure in figures:
             figure.draw(self.screen)
+
 
         ui.blit()
         ui.update()
@@ -40,15 +42,12 @@ def start_execution():
 def new_game():
     pass
 
-def handle_events(events, menu):
-    global alive
-    for event in events:
-        menu.react(event)
+
 
 
 def init_ui(screen):
     '''
-    Инициализация графического интерфейса 
+    Инициализация графического интерфейса
     '''
     button_stop = thorpy.make_button("Quit", func=stop_execution)
     button_pause = thorpy.make_button("Pause", func=pause_execution)
