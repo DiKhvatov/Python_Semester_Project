@@ -1,6 +1,8 @@
 import pygame as pg
 import thorpy
 
+from constants import *
+
 window_height = 1000
 window_width = 1000
 
@@ -18,11 +20,16 @@ class Drawer:
     def __init__(self, screen):
         self.screen = screen
 
-    def update(self, figures, ui):
+    def update(self, player_tank, bullets, targets, tanks, ui):
 
         self.screen.fill((0, 0, 0))
-        for figure in figures:
-            figure.draw(self.screen)
+        player_tank.draw(self.screen)
+        for tank in tanks:
+            tank.draw(self.screen)
+        for bullet in bullets:
+            bullet.draw(self.screen)
+        for target in targets:
+            target.draw(self.screen)
 
 
         ui.blit()

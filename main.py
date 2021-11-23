@@ -2,7 +2,7 @@ import pygame as pg
 import numpy as np
 import thorpy
 
-
+from constants import *
 from objects import *
 from visual import *
 from model import *
@@ -13,28 +13,43 @@ bullets = []
 targets = []
 tanks = []
 player_tank = Tank()
-delta = 0.1
-v0 = 5
-w0 = 0.1
+
+global world_left
+global world_right
+global world_up
+global world_down
+
+global delta
+global v_tank
+global w_tank
+global v_bullet
+
+keys_flags = [False] * 4
 
 
 def handle_events(events, menu, player_tank, alive):
     global w0
     global v0
+    global v_bullet
+    global bullets
     for event in events:
         menu.react(event)
         if event.type == pg.QUIT:
             alive = False
         else:
             if event.type == pg.KEYDOWN:
+                # TODO: пофиксить попеременное переключение клавиш
                 if event.key == pg.K_w:
-                    player_tank.v = v0
+                    player_tank.v = v_tank
                 if event.key == pg.K_s:
-                    player_tank.v = -v0
+                    player_tank.v = -v_tank
                 if event.key == pg.K_d:
-                    player_tank.w = w0
+                    player_tank.w = w_tank
                 if event.key == pg.K_a:
-                    player_tank.w = -w0
+                    player_tank.w = -w_tank
+                if event.key == pg.K_SPACE:
+                    # TODO: зажатый пробел
+                    bullets.append(Bullet(player_tank.x, player_tank.y, player_tank.angle, v_bullet))
             if event.type == pg.KEYUP:
                 if event.key == pg.K_w or event.key == pg.K_s:
                     player_tank.v = 0
@@ -61,14 +76,9 @@ def main():
     menu, box, rounds, score = init_ui(screen)
 
     while alive:
-
-
-
         alive = handle_events(pg.event.get(), menu, player_tank, alive)
-
-        surface = execution(delta, bullets, targets,  tanks, player_tank)
-        #pg.draw.circle(drawer.screen, (0,255,255), (50, 50), 10)
-        drawer.update([player_tank], box)
+        execution(delta, bullets, targets,  tanks, player_tank)
+        drawer.update(player_tank, bullets, targets, tanks, box)
 
 
 

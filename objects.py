@@ -62,6 +62,7 @@ class Tank:
         self.r = 50
         self.color = (0, 255, 0)
         self.color_2 = (255, 0, 0)
+        self.health = 100
 
     def move(self, delta):
         """
@@ -72,43 +73,32 @@ class Tank:
         self.y += self.v * delta * np.sin(self.angle)
         self.angle += self.w * delta
 
-    def start_acceleration_forward(self, acceleration):
-        """
-        Предположительно мы нажимаем стрелочку вперед и запускаем эту функцию, но теперь мне кажется это немного туповатым
-        """
-        self.a = acceleration
-
-    def start_acceleration_back(self, acceleration):
-        self.start_acceleration_forward(-acceleration)
-
-    def end_acceleration_forward(self, acceleration):
-        self.a = 0
-
-    def end_acceleration_back(self, acceleration):
-        self.start_acceleration_forward(-acceleration)
-
-    def start_rotate_right(self, w):
-        self.w = w
-
-    def end_rotate_right(self, w):
-        self.w = 0
-
-    def start_rotate_left(self, w):
-        self.w = w
-
-    def end_rotate_left(self, w):
-        self.w = 0
 
     def draw(self, surface):
         pg.draw.circle(surface, self.color, (self.x, self.y), self.r)
         pg.draw.circle(surface, self.color_2, (self.x + self.r * np.cos(self.angle) , self.y+ self.r * np.sin(self.angle) ), self.r / 5)
 
 
+    def breakthrough(self):
+        self.health += -1
+
 class Target:
     def __init__(self):
-        # TODO: класс
         self.x = 0
         self.y = 0
+        self.v = 0
+        self.a = 0
+        self.w = 0
+        self.angle = 0
+        self.r = 50
+        self.color = (0, 255, 0)
+        self.color_2 = (255, 0, 0)
+        self.health = 100
+
+
+    def breakthrough(self):
+        self.health += -1
+
 
 
 class Target_shooting(Target):
