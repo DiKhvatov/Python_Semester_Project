@@ -7,3 +7,5 @@ delta = 0.1
 v_tank = 5
 w_tank = 0.1
 v_bullet = 10
+window_height = 1000
+window_width = 1000

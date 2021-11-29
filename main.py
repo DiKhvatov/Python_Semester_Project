@@ -19,12 +19,22 @@ global world_right
 global world_up
 global world_down
 
+global window_height
+global window_width
+
 global delta
 global v_tank
 global w_tank
 global v_bullet
 
-keys_flags = [False] * 4
+FLAGS = {
+            'K_w' : False,
+            'K_a' : False,
+            'K_s' : False,
+            'K_d' : False,
+            'K_SPACE' : False,
+            'counter' : 0,
+        }
 
 
 def handle_events(events, menu, player_tank, alive):
@@ -32,6 +42,8 @@ def handle_events(events, menu, player_tank, alive):
     global v0
     global v_bullet
     global bullets
+    global FLAGS
+
     for event in events:
         menu.react(event)
         if event.type == pg.QUIT:
@@ -40,21 +52,54 @@ def handle_events(events, menu, player_tank, alive):
             if event.type == pg.KEYDOWN:
                 # TODO: пофиксить попеременное переключение клавиш
                 if event.key == pg.K_w:
-                    player_tank.v = v_tank
+                    FLAGS.update({"K_w":True})
                 if event.key == pg.K_s:
-                    player_tank.v = -v_tank
+                    FLAGS.update({"K_s":True})
                 if event.key == pg.K_d:
-                    player_tank.w = w_tank
+                    FLAGS.update({"K_d":True})
                 if event.key == pg.K_a:
-                    player_tank.w = -w_tank
+                    FLAGS.update({"K_a":True})
                 if event.key == pg.K_SPACE:
-                    # TODO: зажатый пробел
-                    bullets.append(Bullet(player_tank.x, player_tank.y, player_tank.angle, v_bullet))
+                    FLAGS.update({"K_SPACE":True})
+
             if event.type == pg.KEYUP:
-                if event.key == pg.K_w or event.key == pg.K_s:
-                    player_tank.v = 0
-                if event.key == pg.K_d or event.key == pg.K_a:
-                    player_tank.w = 0
+                if event.key == pg.K_w:
+                    FLAGS.update({"K_w" : False})
+                if event.key == pg.K_s:
+                    FLAGS.update({"K_s" : False})
+                if event.key == pg.K_a:
+                    FLAGS.update({"K_a" : False})
+                if event.key == pg.K_d:
+                    FLAGS.update({"K_d" : False})
+                if event.key == pg.K_SPACE:
+                    FLAGS.update({"K_SPACE":False})
+
+    if FLAGS.get("K_w") or FLAGS.get("K_s"):
+        if FLAGS.get("K_w"):
+            player_tank.v = v_tank
+        if FLAGS.get("K_s"):
+            player_tank.v = -v_tank
+        if FLAGS.get("K_w") and FLAGS.get("K_s"):
+            player_tank.v = 0
+    else:
+        player_tank.v = 0
+
+    if FLAGS.get("K_a") or FLAGS.get("K_d"):
+        if FLAGS.get("K_a"):
+            player_tank.w = -w_tank
+        if FLAGS.get("K_d"):
+            player_tank.w = w_tank
+        if FLAGS.get("K_a") and FLAGS.get("K_d"):
+            player_tank.w = 0
+    else:
+        player_tank.w = 0
+
+    if FLAGS.get("K_SPACE") and FLAGS.get("counter") > 10:
+        FLAGS.update({"counter":0})
+        bullets.append(Bullet(player_tank.x + 6/5 * player_tank.r * np.cos(player_tank.angle) , player_tank.y + 6/5 * player_tank.r * np.sin(player_tank.angle), player_tank.angle, v_bullet, "player_tank"))
+
+    FLAGS.update({"counter" : FLAGS.get("counter") + 1})
+
     return alive
 
 
@@ -67,17 +112,27 @@ def main():
     global tanks
     global player_tank
 
+    global world_left
+    global world_right
+    global world_up
+    global world_down
+
     pg.init()
-    window_height = 1000
-    window_width = 1000
+    global window_height
+    global window_width
     screen = pg.display.set_mode((window_width, window_height))
 
     drawer = Drawer(screen)
     menu, box, rounds, score = init_ui(screen)
 
+    tanks.append(Tank())
+    targets.append(Target_shooting())
+    #print(type(Target_shooting()))
+
     while alive:
-        alive = handle_events(pg.event.get(), menu, player_tank, alive)
+
         execution(delta, bullets, targets,  tanks, player_tank)
+        alive = handle_events(pg.event.get(), menu, player_tank, alive)
         drawer.update(player_tank, bullets, targets, tanks, box)
 
 

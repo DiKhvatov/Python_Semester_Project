@@ -3,8 +3,13 @@ import thorpy
 
 from constants import *
 
-window_height = 1000
-window_width = 1000
+global window_height
+global window_width
+
+global world_left
+global world_right
+global world_up
+global world_down
 
 """
 Есть идея засунуть все связанное с рисованием в этот файл
@@ -22,14 +27,28 @@ class Drawer:
 
     def update(self, player_tank, bullets, targets, tanks, ui):
 
+        global window_height
+        global window_width
+
         self.screen.fill((0, 0, 0))
-        player_tank.draw(self.screen)
+
+        rect_x = world_left - player_tank.x + window_width / 2
+        rect_y = world_up - player_tank.y + window_height / 2
+        rect_width = world_right - world_left
+        rect_height = world_down - world_up
+
+        pg.draw.rect(self.screen, (255, 255, 255), (rect_x, rect_y, rect_width, rect_height))
+        
+        player_tank.draw(self.screen, player_tank.x - window_width / 2, player_tank.y - window_width / 2)
+
         for tank in tanks:
-            tank.draw(self.screen)
+            tank.draw(self.screen, player_tank.x - window_width / 2,  player_tank.y - window_width / 2)
+
         for bullet in bullets:
-            bullet.draw(self.screen)
+            bullet.draw(self.screen, player_tank.x - window_width / 2, player_tank.y - window_width / 2)
+
         for target in targets:
-            target.draw(self.screen)
+            target.draw(self.screen, player_tank.x - window_width / 2,  player_tank.y - window_width / 2)
 
 
         ui.blit()
@@ -38,9 +57,11 @@ class Drawer:
 
 
 def stop_execution():
+
     pass
 
-def pause_execution():
+def pause_execution(delta):
+    delta = 0
     pass
 
 def start_execution():
