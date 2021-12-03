@@ -11,5 +11,5 @@ window_height = 1000
 window_width = 1000
 
 fractal_number = 50
-fractal_constant = -1
+fractal_constant =  0.5
 fractal_degree = 4

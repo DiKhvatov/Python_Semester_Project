@@ -33,7 +33,7 @@ class Mandelbrot(Fractal):
         color = (255, 255, 255)
         for i in range(self.number):
             z = z ** (self.degree) + self.constant
-            #z = z ** (2) + self.constant
+            #z = self.constant ** (z) +self.degree
             if abs(z) > 2:
                 #tmp = int(255 * i / self.number)
                 tmp = int(color_func(i, self.number))
