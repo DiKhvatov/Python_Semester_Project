@@ -96,10 +96,10 @@ class Tank:
             self.existion = False
 
 class Target:
-    def __init__(self):
-        self.x = 200
-        self.y = 150
-        self.v = 1
+    def __init__(self, x, y, v):
+        self.x = x
+        self.y = y
+        self.v = v
         self.a = 0
         self.w = 0
         self.angle = 0
@@ -136,8 +136,8 @@ class Target:
         pg.draw.circle(surface, self.color, (self.x - x, self.y - y), self.r)
 
 class Target_shooting(Target):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, x, y, v):
+        super().__init__(x, y, v)
         self.shooting_angle = 0
         self.charge = 10
         self.type = "shooting target"

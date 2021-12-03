@@ -1,6 +1,7 @@
 import pygame as pg
 import numpy as np
 import thorpy
+from random import randint
 
 from constants import *
 from objects import *
@@ -117,23 +118,43 @@ def main():
     global world_up
     global world_down
 
-    pg.init()
     global window_height
     global window_width
-    screen = pg.display.set_mode((window_width, window_height))
 
-    drawer = Drawer(screen)
-    menu, box, rounds, score = init_ui(screen)
+    for round_number in range(10):
 
-    tanks.append(Tank())
-    targets.append(Target_shooting())
-    #print(type(Target_shooting()))
+        print(round_number)
 
-    while alive:
+        player_tank.x = 0
+        player_tank.y = 0
+        player_tank.v = 0
 
-        execution(delta, bullets, targets,  tanks, player_tank)
-        alive = handle_events(pg.event.get(), menu, player_tank, alive)
-        drawer.update(player_tank, bullets, targets, tanks, box)
+        bullets.clear()
+        tanks.clear()
+        targets.clear()
+
+        for i in range(round_number):
+            targets.append(Target(randint(world_left, world_right), randint(world_up, world_down), randint(0, 5)))
+            targets.append(Target_shooting(randint(world_left, world_right), randint(world_up, world_down), randint(0, 5)))
+
+
+        pg.init()
+        screen = pg.display.set_mode((window_width, window_height))
+
+        drawer = Drawer(screen)
+        menu, box, rounds, score = init_ui(screen)
+
+        tanks.append(Tank())
+        #print(type(Target_shooting()))
+
+        while alive:
+
+            execution(delta, bullets, targets,  tanks, player_tank)
+            alive = handle_events(pg.event.get(), menu, player_tank, alive)
+            drawer.update(player_tank, bullets, targets, tanks, box)
+            if len(targets) == 0:
+                break
+
 
 
 
