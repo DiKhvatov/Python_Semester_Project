@@ -10,6 +10,6 @@ v_bullet = 10
 window_height = 1000
 window_width = 1000
 
-fractal_number = 100
+fractal_number = 50
 fractal_constant = -1
-fractal_degree = 2
+fractal_degree = 4

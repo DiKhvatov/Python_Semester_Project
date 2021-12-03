@@ -18,8 +18,15 @@ class Mandelbrot(Fractal):
         super().__init__(width, height, number, degree, constant)
 
     def color_calculating(self, x, y):
-        x_fractal = 1 * x / self.x_max
-        y_fractal = 1 * y / self.y_max
+
+        def color_func(iter, num):
+            if iter <= num / 2:
+                return int(255 * (1 - 2 * iter / num))
+            else:
+                return color_func(iter - num / 2, num / 2)
+
+        x_fractal = 2 * x / self.x_max
+        y_fractal = 2 * y / self.y_max
 
         z = x_fractal + 1j * y_fractal
         #color = (0, 0, 0)
@@ -28,12 +35,15 @@ class Mandelbrot(Fractal):
             z = z ** (self.degree) + self.constant
             #z = z ** (2) + self.constant
             if abs(z) > 2:
-                tmp = int(255 * i / self.number)
+                #tmp = int(255 * i / self.number)
+                tmp = int(color_func(i, self.number))
                 color = (tmp, tmp, tmp)
                 #print(tmp, i)
                 break
 
         return color
+
+
 
     def painting(self):
         for x in range(- self.x_max, self.x_max):
