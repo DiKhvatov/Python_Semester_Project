@@ -2,6 +2,7 @@ import pygame as pg
 import thorpy
 
 from constants import *
+from fractal import *
 
 global window_height
 global window_width
@@ -11,10 +12,16 @@ global world_right
 global world_up
 global world_down
 
+global fractal_number
+global fractal_constant
+global fractal_degree
+
 """
 Есть идея засунуть все связанное с рисованием в этот файл
 """
 
+fractal = Mandelbrot(world_right - world_left, world_down - world_up, fractal_number, fractal_degree, fractal_constant)
+fractal.painting()
 
 class Drawer:
     """
@@ -29,8 +36,11 @@ class Drawer:
 
         global window_height
         global window_width
+        global fractal
 
         self.screen.fill((0, 0, 0))
+        fractal_surface = fractal.surface
+
 
         rect_x = world_left - player_tank.x + window_width / 2
         rect_y = world_up - player_tank.y + window_height / 2
@@ -38,7 +48,10 @@ class Drawer:
         rect_height = world_down - world_up
 
         pg.draw.rect(self.screen, (255, 255, 255), (rect_x, rect_y, rect_width, rect_height))
-        
+
+        pygame.Surface.blit(self.screen, fractal_surface, (rect_x, rect_y))
+        #pygame.Surface.blit(self.screen, fractal_surface, (0,0))
+
         player_tank.draw(self.screen, player_tank.x - window_width / 2, player_tank.y - window_width / 2)
 
         for tank in tanks:

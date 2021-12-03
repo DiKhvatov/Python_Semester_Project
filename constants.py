@@ -9,3 +9,7 @@ w_tank = 0.1
 v_bullet = 10
 window_height = 1000
 window_width = 1000
+
+fractal_number = 100
+fractal_constant = -1
+fractal_degree = 2

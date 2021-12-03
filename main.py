@@ -8,17 +8,14 @@ from objects import *
 from visual import *
 from model import *
 
-timer = None
-alive = True
-bullets = []
-targets = []
-tanks = []
-player_tank = Tank()
+
 
 global world_left
 global world_right
 global world_up
 global world_down
+
+
 
 global window_height
 global window_width
@@ -27,6 +24,15 @@ global delta
 global v_tank
 global w_tank
 global v_bullet
+
+
+timer = None
+alive = True
+bullets = []
+targets = []
+tanks = []
+player_tank = Tank()
+
 
 FLAGS = {
             'K_w' : False,
