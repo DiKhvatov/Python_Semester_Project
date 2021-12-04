@@ -78,9 +78,12 @@ class Tank:
         self.angle += self.w * delta
 
 
-    def draw(self, surface, x, y):
-        pg.draw.circle(surface, self.color, (self.x - x, self.y - y), self.r)
-        pg.draw.circle(surface, self.color_2, (self.x - x + self.r * np.cos(self.angle) , self.y - y + self.r * np.sin(self.angle) ), self.r / 5)
+    def draw(self, surface, x, y, screen):
+        image = pg.image.load('floppa.png').convert_alpha()
+        new_image = pg.transform.scale(image, (2*self.r, 2*self.r))
+        new_image = pg.transform.rotate(new_image, -90 - 180*self.angle/np.pi)
+        screen.blit(new_image, (self.x - x - 1.2*self.r, self.y - y - 1.2*self.r))
+
 
 
     def wall_collision(self, delta):
@@ -132,8 +135,11 @@ class Target:
         self.y += self.v * delta * np.sin(self.angle)
         self.angle += self.w * delta
 
-    def draw(self, surface, x, y):
-        pg.draw.circle(surface, self.color, (self.x - x, self.y - y), self.r)
+    def draw(self, surface, x, y, screen):
+        image = pg.image.load('floppa2.png').convert_alpha()
+        new_image = pg.transform.scale(image, (2*self.r, 2*self.r))
+        new_image = pg.transform.rotate(new_image, -90 - 180*self.angle/np.pi)
+        screen.blit(new_image, (self.x - x - 1.2*self.r, self.y - y - 1.2*self.r))
 
 class Target_shooting(Target):
     def __init__(self, x, y, v):

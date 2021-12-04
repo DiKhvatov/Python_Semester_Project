@@ -103,7 +103,8 @@ def handle_events(events, menu, player_tank, alive):
 
     if FLAGS.get("K_SPACE") and FLAGS.get("counter") > 10:
         FLAGS.update({"counter":0})
-        bullets.append(Bullet(player_tank.x + 6/5 * player_tank.r * np.cos(player_tank.angle) , player_tank.y + 6/5 * player_tank.r * np.sin(player_tank.angle), player_tank.angle, v_bullet, "player_tank"))
+        bullets.append(Bullet(player_tank.x + 6/5 * player_tank.r * np.cos(player_tank.angle) , player_tank.y +
+            6/5 * player_tank.r * np.sin(player_tank.angle), player_tank.angle, v_bullet + player_tank.v, "player_tank"))
 
     FLAGS.update({"counter" : FLAGS.get("counter") + 1})
 
@@ -157,7 +158,7 @@ def main():
 
             execution(delta, bullets, targets,  tanks, player_tank)
             alive = handle_events(pg.event.get(), menu, player_tank, alive)
-            drawer.update(player_tank, bullets, targets, tanks, box)
+            drawer.update(player_tank, bullets, targets, tanks, box, screen)
             if len(targets) == 0:
                 break
 
