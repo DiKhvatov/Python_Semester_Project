@@ -3,7 +3,8 @@ world_right = 1000
 world_up = -1000
 world_down = 1000
 
-delta = 0.1
+FPS = 60
+delta = 0.1 * FPS / 30
 v_tank = 8
 w_tank = 0.1
 v_bullet = 10

@@ -24,7 +24,7 @@ global delta
 global v_tank
 global w_tank
 global v_bullet
-
+global FPS
 
 timer = None
 alive = True
@@ -50,6 +50,9 @@ def handle_events(events, menu, player_tank, alive):
     global v_bullet
     global bullets
     global FLAGS
+    global FPS
+
+    max_count = 10 * FPS / 120
 
     for event in events:
         menu.react(event)
@@ -101,8 +104,8 @@ def handle_events(events, menu, player_tank, alive):
     else:
         player_tank.w = 0
 
-    if FLAGS.get("K_SPACE") and FLAGS.get("counter") > 10:
-        FLAGS.update({"counter":0})
+    if FLAGS.get("K_SPACE") and FLAGS.get("counter") > max_count:
+        FLAGS.update({"counter" : 0})
         bullets.append(Bullet(player_tank.x + 6/5 * player_tank.r * np.cos(player_tank.angle) , player_tank.y +
             6/5 * player_tank.r * np.sin(player_tank.angle), player_tank.angle, v_bullet + player_tank.v, "player_tank"))
 
@@ -119,6 +122,7 @@ def main():
     global targets
     global tanks
     global player_tank
+    global FPS
 
     global world_left
     global world_right
@@ -127,6 +131,8 @@ def main():
 
     global window_height
     global window_width
+
+    clock = pygame.time.Clock()
 
     for round_number in range(10):
 
@@ -154,6 +160,7 @@ def main():
         tanks.append(Tank())
         #print(type(Target_shooting()))
 
+        delta = 0.1 * FPS / 12
         while alive:
 
             execution(delta, bullets, targets,  tanks, player_tank)
@@ -161,6 +168,8 @@ def main():
             drawer.update(player_tank, bullets, targets, tanks, box, screen)
             if len(targets) == 0:
                 break
+
+            clock.tick(FPS)
 
 
 
