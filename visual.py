@@ -32,7 +32,7 @@ class Drawer:
     def __init__(self, screen):
         self.screen = screen
 
-    def update(self, player_tank, bullets, targets, tanks, ui):
+    def update(self, player_tank, bullets, targets, tanks, ui, screen):
 
         global window_height
         global window_width
@@ -52,16 +52,16 @@ class Drawer:
         pygame.Surface.blit(self.screen, fractal_surface, (rect_x, rect_y))
         #pygame.Surface.blit(self.screen, fractal_surface, (0,0))
 
-        player_tank.draw(self.screen, player_tank.x - window_width / 2, player_tank.y - window_width / 2)
+        player_tank.draw(self.screen, player_tank.x - window_width / 2, player_tank.y - window_width / 2, screen)
 
         for tank in tanks:
-            tank.draw(self.screen, player_tank.x - window_width / 2,  player_tank.y - window_width / 2)
+            tank.draw(self.screen, player_tank.x - window_width / 2,  player_tank.y - window_width / 2, screen)
 
         for bullet in bullets:
             bullet.draw(self.screen, player_tank.x - window_width / 2, player_tank.y - window_width / 2)
 
         for target in targets:
-            target.draw(self.screen, player_tank.x - window_width / 2,  player_tank.y - window_width / 2)
+            target.draw(self.screen, player_tank.x - window_width / 2,  player_tank.y - window_width / 2, screen)
 
 
         ui.blit()
