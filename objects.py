@@ -76,7 +76,10 @@ class Tank:
         self.x += self.v * delta * np.cos(self.angle)
         self.y += self.v * delta * np.sin(self.angle)
         self.angle += self.w * delta
-
+        while self.angle >= 2*np.pi:
+            self.angle += -2*np.pi
+        while self.angle < 0:
+            self.angle += 2*np.pi
 
     def draw(self, surface, x, y, screen):
         image = pg.image.load('floppa.png').convert_alpha()
@@ -139,6 +142,7 @@ class Target:
         self.x += self.v * delta * np.cos(self.angle)
         self.y += self.v * delta * np.sin(self.angle)
         self.angle += self.w * delta
+        
 
     def draw(self, surface, x, y, screen):
         image = pg.image.load('floppa2.png').convert_alpha()
