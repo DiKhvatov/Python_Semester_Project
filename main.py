@@ -1,14 +1,12 @@
 import pygame as pg
 import numpy as np
-import thorpy
+
 from random import randint
 
 from constants import *
 from objects import *
 from visual import *
 from model import *
-
-
 
 global world_left
 global world_right
@@ -24,15 +22,17 @@ global delta
 global v_tank
 global w_tank
 global v_bullet
-
+global FPS
 
 timer = None
 alive = True
 bullets = []
 targets = []
 tanks = []
+screen = pg.display.set_mode((window_width, window_height))
 player_tank = Tank()
 
+print("We are fucked1")
 
 FLAGS = {
             'K_w' : False,
@@ -44,15 +44,17 @@ FLAGS = {
         }
 
 
-def handle_events(events, menu, player_tank, alive):
+def handle_events(events, player_tank, alive):
     global w0
     global v0
     global v_bullet
     global bullets
     global FLAGS
+    global FPS
+
+    max_count = 10 * FPS / 120
 
     for event in events:
-        menu.react(event)
         if event.type == pg.QUIT:
             alive = False
         else:
@@ -101,8 +103,8 @@ def handle_events(events, menu, player_tank, alive):
     else:
         player_tank.w = 0
 
-    if FLAGS.get("K_SPACE") and FLAGS.get("counter") > 10:
-        FLAGS.update({"counter":0})
+    if FLAGS.get("K_SPACE") and FLAGS.get("counter") > max_count:
+        FLAGS.update({"counter" : 0})
         bullets.append(Bullet(player_tank.x + 6/5 * player_tank.r * np.cos(player_tank.angle) , player_tank.y +
             6/5 * player_tank.r * np.sin(player_tank.angle), player_tank.angle, v_bullet + player_tank.v, "player_tank"))
 
@@ -119,6 +121,7 @@ def main():
     global targets
     global tanks
     global player_tank
+    global FPS
 
     global world_left
     global world_right
@@ -127,6 +130,8 @@ def main():
 
     global window_height
     global window_width
+
+    clock = pygame.time.Clock()
 
     for round_number in range(10):
 
@@ -145,25 +150,27 @@ def main():
             targets.append(Target_shooting(randint(world_left, world_right), randint(world_up, world_down), randint(0, 5)))
 
 
-        pg.init()
-        screen = pg.display.set_mode((window_width, window_height))
-
         drawer = Drawer(screen)
-        menu, box, rounds, score = init_ui(screen)
 
         tanks.append(Tank())
         #print(type(Target_shooting()))
 
+        delta = 0.1 * FPS / 12
         while alive:
 
             execution(delta, bullets, targets,  tanks, player_tank)
-            alive = handle_events(pg.event.get(), menu, player_tank, alive)
-            drawer.update(player_tank, bullets, targets, tanks, box, screen)
+            alive = handle_events(pg.event.get(), player_tank, alive)
+            drawer.update(player_tank, bullets, targets, tanks, screen)
             if len(targets) == 0:
                 break
 
+            clock.tick(FPS)
 
+print("We are fucked")
 
+pg.init()
+
+nickname = new_game(screen)
 
 
 main()
