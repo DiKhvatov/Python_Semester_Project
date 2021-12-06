@@ -82,7 +82,12 @@ class Tank:
         image = pg.image.load('floppa.png').convert_alpha()
         new_image = pg.transform.scale(image, (2*self.r, 2*self.r))
         new_image = pg.transform.rotate(new_image, -90 - 180*self.angle/np.pi)
-        screen.blit(new_image, (self.x - x - 1.2*self.r, self.y - y - 1.2*self.r))
+        rot = self.angle
+        while rot >= np.pi/2:
+            rot += -np.pi/2
+        deltaX = self.r*np.sqrt(2)*np.cos(np.pi/4 + rot) + 2*np.sin(rot)*self.r - self.r
+        deltaY = self.r*np.sin(np.pi/4 + rot) - self.r
+        screen.blit(new_image, (self.x - x - 1.2*self.r - deltaX, self.y - y - 1.2*self.r - deltaY))
 
 
 
