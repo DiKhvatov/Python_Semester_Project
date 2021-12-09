@@ -40,6 +40,8 @@ class Bullet:
         if self.x < wall_x_left or self.x > wall_x_right or self.y < wall_y_up or self.y > wall_y_down:
             self.existion = False
 
+
+
 class Tank:
     """
     Класс танка
@@ -97,6 +99,17 @@ class Tank:
         self.health += -1
         if self.health <= 0:
             self.existion = False
+
+    def new_round(self):
+        self.x = 0
+        self.y = 0
+        self.v = 0
+
+    def target_collision(self, target):
+        if (self.x - target.x) ** 2 + (self.y - target.y) ** 2 <= (self.r + target.r) ** 2:
+            self.health -= 10
+            target.existion = False
+            
 
 class Target:
     def __init__(self, x, y, v):
@@ -160,7 +173,8 @@ class Target_shooting(Target):
 
 
     def shoot(self):
+        global v_bullet
         if self.charge >= 10:
             self.charge = 0
-            return Bullet(self.x, self.y, self.angle, 10, "target")
+            return Bullet(self.x, self.y, self.angle, v_bullet, "target")
         return 0

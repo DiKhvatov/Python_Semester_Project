@@ -38,6 +38,7 @@ def execution(delta, bullets, targets,  tanks, player_tank):
             target.charging(delta)
             if not bullet == 0:
                 bullets.append(bullet)
+        player_tank.target_collision(target)
         target.move(delta)
 
     for tank in tanks:

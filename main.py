@@ -8,24 +8,6 @@ from objects import *
 from visual import *
 from model import *
 
-
-
-global world_left
-global world_right
-global world_up
-global world_down
-
-
-
-global window_height
-global window_width
-
-global delta
-global v_tank
-global w_tank
-global v_bullet
-global FPS
-
 timer = None
 alive = True
 bullets = []
@@ -132,15 +114,20 @@ def main():
     global window_height
     global window_width
 
-    clock = pygame.time.Clock()
+    clock = pg.time.Clock()
+    pg.init()
+    screen = pg.display.set_mode((window_width, window_height))
+
+    IMAGES = []
+    for i in range(100):
+        IMAGES.append(pg.image.load('fractals/' + str(i) + '.png').convert_alpha())
+
 
     for round_number in range(10):
 
         print(round_number)
 
-        player_tank.x = 0
-        player_tank.y = 0
-        player_tank.v = 0
+        player_tank.new_round()
 
         bullets.clear()
         tanks.clear()
@@ -151,8 +138,7 @@ def main():
             targets.append(Target_shooting(randint(world_left, world_right), randint(world_up, world_down), randint(0, 5)))
 
 
-        pg.init()
-        screen = pg.display.set_mode((window_width, window_height))
+
 
         drawer = Drawer(screen)
         menu, box, rounds, score = init_ui(screen)
@@ -165,7 +151,7 @@ def main():
 
             execution(delta, bullets, targets,  tanks, player_tank)
             alive = handle_events(pg.event.get(), menu, player_tank, alive)
-            drawer.update(player_tank, bullets, targets, tanks, box, screen)
+            drawer.update(player_tank, bullets, targets, tanks, box, screen, delta, IMAGES)
             if len(targets) == 0:
                 break
 
