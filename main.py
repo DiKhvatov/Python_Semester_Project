@@ -8,25 +8,6 @@ from objects import *
 from visual import *
 from model import *
 
-<<<<<<< HEAD
-=======
-global world_left
-global world_right
-global world_up
-global world_down
-
-
-
-global window_height
-global window_width
-
-global delta
-global v_tank
-global w_tank
-global v_bullet
-global FPS
-
->>>>>>> 931aea8e9f281651c94a97af7b1e55fa0bc02cf8
 timer = None
 alive = True
 bullets = []
@@ -158,11 +139,8 @@ def main():
             targets.append(Target_shooting(randint(world_left, world_right), randint(world_up, world_down), randint(0, 5)))
 
 
-<<<<<<< HEAD
 
 
-=======
->>>>>>> 931aea8e9f281651c94a97af7b1e55fa0bc02cf8
         drawer = Drawer(screen)
 
         tanks.append(Tank())
@@ -172,13 +150,8 @@ def main():
         while alive:
 
             execution(delta, bullets, targets,  tanks, player_tank)
-<<<<<<< HEAD
             alive = handle_events(pg.event.get(), menu, player_tank, alive)
             drawer.update(player_tank, bullets, targets, tanks, box, screen, delta, IMAGES)
-=======
-            alive = handle_events(pg.event.get(), player_tank, alive)
-            drawer.update(player_tank, bullets, targets, tanks, screen)
->>>>>>> 931aea8e9f281651c94a97af7b1e55fa0bc02cf8
             if len(targets) == 0:
                 break
 
