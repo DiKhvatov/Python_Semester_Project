@@ -150,8 +150,8 @@ def main():
         while alive:
 
             execution(delta, bullets, targets,  tanks, player_tank)
-            alive = handle_events(pg.event.get(), menu, player_tank, alive)
-            drawer.update(player_tank, bullets, targets, tanks, box, screen, delta, IMAGES)
+            alive = handle_events(pg.event.get(), player_tank, alive)
+            drawer.update(player_tank, bullets, targets, tanks, screen, delta, IMAGES)
             if len(targets) == 0:
                 break
 

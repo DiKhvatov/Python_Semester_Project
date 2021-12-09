@@ -20,7 +20,7 @@ class Drawer:
         self.direction = 1
 
 
-    def update(self, player_tank, bullets, targets, tanks, ui, screen, delta, IMAGES):
+    def update(self, player_tank, bullets, targets, tanks, screen, delta, IMAGES):
 
         global window_height
         global window_width
