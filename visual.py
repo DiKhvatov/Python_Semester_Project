@@ -60,50 +60,44 @@ class Drawer:
         for target in targets:
             target.draw(self.screen, player_tank.x - window_width / 2,  player_tank.y - window_width / 2, screen)
 
-
-        ui.blit()
-        ui.update()
         pg.display.update()
 
 
-def stop_execution():
+pg.init()
 
-    pass
+font = pg.font.SysFont("Helvetica Neue", 50)
+font_medium = pg.font.SysFont("Helvetica Neue", 40)
 
-def pause_execution(delta):
-    delta = 0
-    pass
-
-def start_execution():
-    pass
-
-def new_game():
-    pass
-
-
-
-
-def init_ui(screen):
-    '''
-    Инициализация графического интерфейса
-    '''
-    button_stop = thorpy.make_button("Quit", func=stop_execution)
-    button_pause = thorpy.make_button("Pause", func=pause_execution)
-    button_play = thorpy.make_button("Play", func=start_execution)
-    timer = thorpy.OneLineText("Time: ")
-    rounds = thorpy.OneLineText("Round: ")
-    score = thorpy.OneLineText("Score: ")
-    button_new_game = thorpy.make_button(text="New game", func=new_game)
-
-    box = thorpy.Box(
-        elements=[button_pause, button_stop, button_play, button_new_game, timer, score]
-    )
-
-    menu = thorpy.Menu(box)
-    for element in menu.get_population():
-        element.surface = screen
-
-    box.set_topleft((0, 0))
-    box.blit()
-    box.update()
-    return menu, box, rounds, score
+def new_game(screen):
+    init = True
+    Name = ""
+    WIDTH = window_width
+    HEIGHT = window_height
+    while init:
+        screen.fill((255, 255, 255))
+        text_1 = font.render("Enter your name", False, (0, 0, 0))
+        text_2 = font.render("Submit", False, (0, 0, 0))
+        text_name = font_medium.render(Name, False, (0, 0, 0))
+        pg.draw.rect(screen, (0,0,0), (int(WIDTH/2 - 3 - text_2.get_width()/2), 480-3, text_2.get_width() + 6, text_2.get_height() + 6), 2)
+        screen.blit(text_1, (int(WIDTH/2 - text_1.get_width()/2), 270))
+        screen.blit(text_2, (int(WIDTH/2 - text_2.get_width()/2), 480))
+        pg.draw.rect(screen, ((0, 0, 0)), (WIDTH/2 - 170, 390, 340, 50), 2)
+        screen.blit(text_name, (WIDTH/2 - 170 + 3, 390 + 3))
+        pg.display.update()
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                init = False
+            elif event.type == pg.KEYDOWN:
+                if event.key == pg.K_BACKSPACE:
+                    Name = Name[:-1]
+                elif event.key == pg.K_SPACE:
+                    Name += " "
+                else:
+                    Name += pg.key.name(event.key)
+            elif event.type == pg.MOUSEBUTTONUP:
+                if (event.pos[0] > int(WIDTH/2 - text_2.get_width()/2)) and (
+                event.pos[0] < int(WIDTH/2 + text_2.get_width()/2)) and (
+                event.pos[1] > 480) and (event.pos[1] < 480 + text_2.get_height()):
+                    init = False
+    print(Name)
+    return Name

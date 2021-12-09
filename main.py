@@ -1,6 +1,6 @@
 import pygame as pg
 import numpy as np
-import thorpy
+
 from random import randint
 
 from constants import *
@@ -8,13 +8,34 @@ from objects import *
 from visual import *
 from model import *
 
+<<<<<<< HEAD
+=======
+global world_left
+global world_right
+global world_up
+global world_down
+
+
+
+global window_height
+global window_width
+
+global delta
+global v_tank
+global w_tank
+global v_bullet
+global FPS
+
+>>>>>>> 931aea8e9f281651c94a97af7b1e55fa0bc02cf8
 timer = None
 alive = True
 bullets = []
 targets = []
 tanks = []
+screen = pg.display.set_mode((window_width, window_height))
 player_tank = Tank()
 
+print("We are fucked1")
 
 FLAGS = {
             'K_w' : False,
@@ -26,7 +47,7 @@ FLAGS = {
         }
 
 
-def handle_events(events, menu, player_tank, alive):
+def handle_events(events, player_tank, alive):
     global w0
     global v0
     global v_bullet
@@ -37,7 +58,6 @@ def handle_events(events, menu, player_tank, alive):
     max_count = 10 * FPS / 120
 
     for event in events:
-        menu.react(event)
         if event.type == pg.QUIT:
             alive = False
         else:
@@ -138,10 +158,12 @@ def main():
             targets.append(Target_shooting(randint(world_left, world_right), randint(world_up, world_down), randint(0, 5)))
 
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 931aea8e9f281651c94a97af7b1e55fa0bc02cf8
         drawer = Drawer(screen)
-        menu, box, rounds, score = init_ui(screen)
 
         tanks.append(Tank())
         #print(type(Target_shooting()))
@@ -150,15 +172,23 @@ def main():
         while alive:
 
             execution(delta, bullets, targets,  tanks, player_tank)
+<<<<<<< HEAD
             alive = handle_events(pg.event.get(), menu, player_tank, alive)
             drawer.update(player_tank, bullets, targets, tanks, box, screen, delta, IMAGES)
+=======
+            alive = handle_events(pg.event.get(), player_tank, alive)
+            drawer.update(player_tank, bullets, targets, tanks, screen)
+>>>>>>> 931aea8e9f281651c94a97af7b1e55fa0bc02cf8
             if len(targets) == 0:
                 break
 
             clock.tick(FPS)
 
+print("We are fucked")
 
+pg.init()
 
+nickname = new_game(screen)
 
 
 main()
