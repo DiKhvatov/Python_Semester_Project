@@ -3,59 +3,90 @@ import pygame as pg
 from constants import *
 
 """
-Есть идея засунуть все связанное с рисованием в этот файл
+Файл для отрисовки элементов
+
+Содержит класс Drawer для отрисовки во время игры
+функцию new_game для начальной заставки
+
+Использует константы из соответствующего файла
 """
 
 
 class Drawer:
     """
-    Стыренная функция из проекта солнечной системы
-    Надо бы
+    Класс отрисовщика
+    Функции:
+    init - инициализация
+    update - обновляет экран, переотрисовывает картинку
     """
 
     def __init__(self, screen):
+        '''
+        screen - экран для отрисовки
+        counter - счетчик для переменной отрисовки фракталов
+        direction - направление отрисовки картинки во времени для зацикливания
+        '''
         self.screen = screen
         self.counter = 0
         self.direction = 1
 
 
     def update(self, player_tank, bullets, targets, tanks, screen, delta, IMAGES):
-
+        '''
+        player_tank - танк игрока
+        bullets - массив с пулями для отрисовки
+        targets - массив с целями для отрисовки
+        tanks - танки для отрисовки
+        screen - экран для отрисовки
+        delta - промежуток времени
+        IMAGES - массив с картинками для отрисовки изменяющегося фрактала
+        Предполагается, что каждая имеет функцию отрисовки draw
+        '''
         global window_height
         global window_width
         global fractal
 
+        #заполнение экрана черным цветом
         self.screen.fill((0, 0, 0))
 
-
+        #расчет координат для отрисовки элементов в системе танка игрока
         rect_x = world_left - player_tank.x + window_width / 2
         rect_y = world_up - player_tank.y + window_height / 2
         rect_width = world_right - world_left
         rect_height = world_down - world_up
 
+        #белый прямоугольник - поле игры
         pg.draw.rect(self.screen, (255, 255, 255), (rect_x, rect_y, rect_width, rect_height))
 
+        #отрисовка картинки фрактала
         pg.Surface.blit(self.screen, IMAGES[int(self.counter)], (rect_x, rect_y))
+
+        #пополнение счетчика для дальнейшей смены картинок для прорисовки
         if self.direction == 1:
             self.counter += delta * 0.3
         else:
             self.counter -= delta * 0.3
 
+        #условие на конец записанных картинок и смена направления отрисовки
         if self.counter >= 99:
             self.direction = 0
 
+        #условие на конец записанных картинок и смена направления отрисовки
         if self.counter <= 0:
             self.direction = 1
-        #pygame.Surface.blit(self.screen, fractal_surface, (0,0))
 
+        #отрисовка танка игрока
         player_tank.draw(self.screen, player_tank.x - window_width / 2, player_tank.y - window_width / 2, screen)
 
+        #отрисовка танков из массива
         for tank in tanks:
             tank.draw(self.screen, player_tank.x - window_width / 2,  player_tank.y - window_width / 2, screen)
 
+        #отрисовка пуль из массива
         for bullet in bullets:
             bullet.draw(self.screen, player_tank.x - window_width / 2, player_tank.y - window_width / 2)
 
+        #отрисовка целей из массива
         for target in targets:
             target.draw(self.screen, player_tank.x - window_width / 2,  player_tank.y - window_width / 2, screen)
 
@@ -64,8 +95,14 @@ class Drawer:
 
 
 def new_game(screen):
+<<<<<<< HEAD
     font = pg.font.SysFont("Helvetica Neue", 50)
     font_medium = pg.font.SysFont("Helvetica Neue", 40)
+=======
+    '''
+    Функцию писал ДмитрийЁ видимо это окно с вводом имени
+    '''
+>>>>>>> f40dd7f0b86c0e7d7aab9ce58bc8db0306f98f90
     init = True
     Name = ""
     WIDTH = window_width

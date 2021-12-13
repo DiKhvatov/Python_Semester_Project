@@ -68,7 +68,8 @@ def handle_events(events, player_tank, alive):
 
     if FLAGS.get("K_w") or FLAGS.get("K_s"):
         if FLAGS.get("K_w"):
-            player_tank.v = v_tank
+            #player_tank.v = v_tank
+            player_tank.a = 1
         if FLAGS.get("K_s"):
             player_tank.v = -v_tank
         if FLAGS.get("K_w") and FLAGS.get("K_s"):
