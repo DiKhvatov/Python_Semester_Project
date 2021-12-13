@@ -29,7 +29,7 @@ class Drawer:
         self.screen = screen
         self.counter = 0
         self.direction = 1
-        
+
 
 
     def update(self, player_tank, bullets, targets, tanks, screen, delta, IMAGES):
@@ -43,8 +43,7 @@ class Drawer:
         IMAGES - массив с картинками для отрисовки изменяющегося фрактала
         Предполагается, что каждая имеет функцию отрисовки draw
         '''
-        global window_height
-        global window_width
+        
         global fractal
 
         #заполнение экрана черным цветом

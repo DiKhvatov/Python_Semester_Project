@@ -2,10 +2,6 @@ import numpy as np
 import pygame as pg
 from constants import *
 
-global world_left
-global world_right
-global world_up
-global world_down
 
 '''
 Файл с описание классов элементов
@@ -98,6 +94,7 @@ class Tank:
         self.color_2 = (255, 0, 0)
         self.health = 100
         self.existion = True
+        self.image = pg.image.load('images/floppa.png').convert_alpha()
 
 
     def move(self, delta):
@@ -119,7 +116,7 @@ class Tank:
         Отрисовка картинки танка
         автор - Батухан
         '''
-        image = pg.image.load('floppa.png').convert_alpha()
+        image = self.image
         new_image = pg.transform.scale(image, (2*self.r, 2*self.r))
         new_image = pg.transform.rotate(new_image, -90 - 180*self.angle/np.pi)
         rot = self.angle
@@ -187,6 +184,7 @@ class Target:
         self.health = 5
         self.type = "simple target"
         self.existion = True
+        self.image = pg.image.load('images/floppa1.png').convert_alpha()
 
 
     def aiming(self, tank):
@@ -224,7 +222,7 @@ class Target:
         Функция отрисовки цели
         автор - Батухан
         '''
-        image = pg.image.load('floppa2.png').convert_alpha()
+        image = self.image
         new_image = pg.transform.scale(image, (2*self.r, 2*self.r))
         new_image = pg.transform.rotate(new_image, -90 - 180*self.angle/np.pi)
         screen.blit(new_image, (self.x - x - 1.2*self.r, self.y - y - 1.2*self.r))

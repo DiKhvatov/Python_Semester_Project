@@ -1,22 +1,30 @@
 import pygame as pg
 import numpy as np
-import thorpy
 
 from constants import *
 from objects import *
 
 def execution(delta, bullets, targets,  tanks, player_tank):
-    global world_left
-    global world_right
-    global world_up
-    global world_down
-
+    '''
+    Функция выполняет взаимодействие медлу объектами
+    delta - разница по времени
+    bullets -массив с пулями
+    targets - массив с целями
+    tanks  - массив с танками
+    player_tank - танк игрока
+    '''
+    #проверяем выход за границы карты
     player_tank.wall_collision(delta)
     #print(player_tank.health)
+    #передвижение танка игрока
     player_tank.move(delta)
 
     for bullet in bullets:
+        #обработка событий с пулями
+        #проверка выхода за границу
         bullet.wall_collision(world_left, world_right, world_up, world_down)
+
+        #проверка создателя и столкновения с элемнтами
         if not bullet.parent == "tank":
             bullet.checking_breakthrough(tanks)
         if not bullet.parent == "target":
@@ -26,18 +34,29 @@ def execution(delta, bullets, targets,  tanks, player_tank):
         if not bullet.existion:
             bullets.remove(bullet)
             continue
+
+        #передвижение пули
         bullet.move(delta)
 
     for target in targets:
+        #проверка существования целей
         if not target.existion:
             targets.remove(target)
+            explosion = pg.mixer.Sound("music/zvuk-vzryva-dlya-video.ogg")
+            explosion.play()
             continue
+
+        #нацеливание на танк игрока
         target.aiming(player_tank)
+
+        #стрельба стрелящей цели
         if target.type == "shooting target":
             bullet = target.shoot()
             target.charging(delta)
             if not bullet == 0:
                 bullets.append(bullet)
+
+        #проверка на столкновения танка с целью
         player_tank.target_collision(target)
         target.move(delta)
 

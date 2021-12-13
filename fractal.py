@@ -3,14 +3,7 @@ import numpy as np
 
 from constants import *
 
-global world_left
-global world_right
-global world_up
-global world_down
 
-global fractal_number
-global fractal_constant
-global fractal_degree
 
 #surface.set_at((x, y), color)
 
