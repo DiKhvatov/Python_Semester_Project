@@ -9,6 +9,7 @@ from objects import *
 from visual import *
 from model import *
 from server import *
+from client import *
 
 timer = None
 alive = True
@@ -93,6 +94,15 @@ def handle_events(events, player_tank, alive):
 
     return alive
 
+def client_init():
+    cl = Client()
+    cl.enter_menu(screen)
+
+def server_init():
+    serv = Server()
+    serv.enter_port(screen)
+    serv.bind()
+
 
 def main():
     global alive
@@ -153,10 +163,11 @@ choice = join_create(screen)
 if choice == "e":
     quit()
 elif choice == "s":
-    serv = Server()
+    serv = Server(nickname)
     serv.enter_port(screen)
     serv.bind()
 elif choice == "c":
-    quit()
+    cl = Client(nickname)
+    cl.enter_menu(screen)
 '''
 main()

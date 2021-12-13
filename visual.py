@@ -3,29 +3,17 @@ import pygame as pg
 from constants import *
 
 """
-Файл для отрисовки элементов
-
-Содержит класс Drawer для отрисовки во время игры
-функцию new_game для начальной заставки
-
-Использует константы из соответствующего файла
+Есть идея засунуть все связанное с рисованием в этот файл
 """
 
 
 class Drawer:
     """
-    Класс отрисовщика
-    Функции:
-    init - инициализация
-    update - обновляет экран, переотрисовывает картинку
+    Стыренная функция из проекта солнечной системы
+    Надо бы
     """
 
     def __init__(self, screen):
-        '''
-        screen - экран для отрисовки
-        counter - счетчик для переменной отрисовки фракталов
-        direction - направление отрисовки картинки во времени для зацикливания
-        '''
         self.screen = screen
         self.counter = 0
         self.direction = 1
@@ -43,50 +31,41 @@ class Drawer:
         IMAGES - массив с картинками для отрисовки изменяющегося фрактала
         Предполагается, что каждая имеет функцию отрисовки draw
         '''
-        
+        global window_height
+        global window_width
         global fractal
 
-        #заполнение экрана черным цветом
         self.screen.fill((0, 0, 0))
 
-        #расчет координат для отрисовки элементов в системе танка игрока
+
         rect_x = world_left - player_tank.x + window_width / 2
         rect_y = world_up - player_tank.y + window_height / 2
         rect_width = world_right - world_left
         rect_height = world_down - world_up
 
-        #белый прямоугольник - поле игры
         pg.draw.rect(self.screen, (255, 255, 255), (rect_x, rect_y, rect_width, rect_height))
 
-        #отрисовка картинки фрактала
         pg.Surface.blit(self.screen, IMAGES[int(self.counter)], (rect_x, rect_y))
-
-        #пополнение счетчика для дальнейшей смены картинок для прорисовки
         if self.direction == 1:
             self.counter += delta * 0.3
         else:
             self.counter -= delta * 0.3
 
-        #условие на конец записанных картинок и смена направления отрисовки
         if self.counter >= 99:
             self.direction = 0
 
-        #условие на конец записанных картинок и смена направления отрисовки
         if self.counter <= 0:
             self.direction = 1
+        #pygame.Surface.blit(self.screen, fractal_surface, (0,0))
 
-        #отрисовка танка игрока
         player_tank.draw(self.screen, player_tank.x - window_width / 2, player_tank.y - window_width / 2, screen)
 
-        #отрисовка танков из массива
         for tank in tanks:
             tank.draw(self.screen, player_tank.x - window_width / 2,  player_tank.y - window_width / 2, screen)
 
-        #отрисовка пуль из массива
         for bullet in bullets:
             bullet.draw(self.screen, player_tank.x - window_width / 2, player_tank.y - window_width / 2)
 
-        #отрисовка целей из массива
         for target in targets:
             target.draw(self.screen, player_tank.x - window_width / 2,  player_tank.y - window_width / 2, screen)
 
@@ -163,11 +142,9 @@ def join_create(screen):
                 event.pos[1] > 300) and (event.pos[1] < 300 + text_serv.get_height()):
                     init = False
                     choice = "s"
-            elif event.type == pg.MOUSEBUTTONUP:
-                print(event.pos)
-                if (event.pos[0] > int(WIDTH/2 - text_serv.get_width()/2)) and (
-                event.pos[0] < int(WIDTH/2 + text_serv.get_width()/2)) and (
-                event.pos[1] > 450) and (event.pos[1] < 450 + text_serv.get_height()):
+                elif (event.pos[0] > int(WIDTH/2 - text_cl.get_width()/2)) and (
+                event.pos[0] < int(WIDTH/2 + text_cl.get_width()/2)) and (
+                event.pos[1] > 450) and (event.pos[1] < 450 + text_cl.get_height()):
                     init = False
                     choice = "c"
     print(choice)
