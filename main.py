@@ -121,7 +121,10 @@ def main():
     pg.mixer.music.load("music/Chicago-Symphony-Orchestra_-Sir-Georg-Solti-—-Prokofiev-Romeo-and-Juliet_-Op.-64-_-Act-1-13.ogg")
     pg.mixer.music.play(-1, 0.0)
     for round_number in range(10):
-
+        if not alive:
+            break
+        fuckyou = pg.mixer.Sound("music/fuckyou.ogg")
+        fuckyou.play()
         #print(round_number)
 
         player_tank.new_round()

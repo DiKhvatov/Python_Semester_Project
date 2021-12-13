@@ -57,8 +57,8 @@ class Server:
 			lb = 700
 
 
-			for name in self.list_of_clients
-
+			for name in self.list_of_clients:
+				pass
 
 
 			pg.display.update()

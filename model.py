@@ -41,6 +41,8 @@ def execution(delta, bullets, targets,  tanks, player_tank):
     for target in targets:
         #проверка существования целей
         if not target.existion:
+            fuckyou = pg.mixer.Sound("music/fuckyou.ogg")
+            fuckyou.play()
             targets.remove(target)
             explosion = pg.mixer.Sound("music/zvuk-vzryva-dlya-video.ogg")
             explosion.play()
