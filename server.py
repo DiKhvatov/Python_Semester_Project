@@ -14,7 +14,6 @@ class Server:
 		print("Initialization")
 		
 		self.IP = (socket.gethostbyname_ex(socket.gethostname())[2])[0]
-		print(type(self.IP))
 		print ("Your IP is " + str(self.IP))
 
 	def bind(self):
@@ -60,5 +59,5 @@ class Server:
 		print("Your port is now " + str(port))
 		self.PORT = int(port)
 
-	def lobby_serv(self, screen):
+
 

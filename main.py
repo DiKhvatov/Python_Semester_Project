@@ -8,6 +8,7 @@ from objects import *
 from visual import *
 from model import *
 from server import *
+from client import *
 
 timer = None
 alive = True
@@ -170,4 +171,5 @@ elif choice == "s":
     serv.enter_port(screen)
     serv.bind()
 elif choice == "c":
-    quit()
+    cl = Client()
+    cl.enter_menu(screen)
