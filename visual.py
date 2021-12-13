@@ -1,5 +1,4 @@
 import pygame as pg
-import thorpy
 
 from constants import *
 
@@ -63,12 +62,10 @@ class Drawer:
         pg.display.update()
 
 
-pg.init()
-
-font = pg.font.SysFont("Helvetica Neue", 50)
-font_medium = pg.font.SysFont("Helvetica Neue", 40)
 
 def new_game(screen):
+    font = pg.font.SysFont("Helvetica Neue", 50)
+    font_medium = pg.font.SysFont("Helvetica Neue", 40)
     init = True
     Name = ""
     WIDTH = window_width
@@ -99,5 +96,54 @@ def new_game(screen):
                 event.pos[0] < int(WIDTH/2 + text_2.get_width()/2)) and (
                 event.pos[1] > 480) and (event.pos[1] < 480 + text_2.get_height()):
                     init = False
-    print(Name)
     return Name
+
+def join_create(screen):
+    font = pg.font.SysFont("Helvetica Neue", 50)
+    font_medium = pg.font.SysFont("Helvetica Neue", 40)
+    init = True
+    WIDTH = window_width
+    HEIGHT = window_height
+    choice = ""
+    while init:
+        screen.fill((255, 255, 255))
+        text_que = font.render("Who would you like to be?", False, (0, 0, 0))
+        text_serv = font.render("Server", False, (0, 0, 0))
+        text_cl = font.render("Client", False, (0, 0, 0))
+        
+        screen.blit(text_que, (int(WIDTH/2 - text_que.get_width()/2), 140))
+        screen.blit(text_serv, (int(WIDTH/2 - text_serv.get_width()/2), 300))
+        screen.blit(text_cl, (int(WIDTH/2 - text_cl.get_width()/2), 450))
+        pg.draw.rect(screen, (0,0,0), (int(WIDTH/2-text_serv.get_width()/2),300,text_serv.get_width(),text_serv.get_height()), 2)
+        pg.draw.rect(screen, (0,0,0), (int(WIDTH/2-text_cl.get_width()/2),450,text_cl.get_width(),text_cl.get_height()), 2)
+
+        pg.display.update()
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                init = False
+                choice = "e"
+            elif event.type == pg.MOUSEBUTTONUP:
+                print(event.pos)
+                if (event.pos[0] > int(WIDTH/2 - text_serv.get_width()/2)) and (
+                event.pos[0] < int(WIDTH/2 + text_serv.get_width()/2)) and (
+                event.pos[1] > 300) and (event.pos[1] < 300 + text_serv.get_height()):
+                    init = False
+                    choice = "s"
+            elif event.type == pg.MOUSEBUTTONUP:
+                print(event.pos)
+                if (event.pos[0] > int(WIDTH/2 - text_serv.get_width()/2)) and (
+                event.pos[0] < int(WIDTH/2 + text_serv.get_width()/2)) and (
+                event.pos[1] > 450) and (event.pos[1] < 450 + text_serv.get_height()):
+                    init = False
+                    choice = "c"
+    print(choice)    
+    return choice
+
+
+
+
+
+
+
+
+

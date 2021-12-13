@@ -7,6 +7,7 @@ from constants import *
 from objects import *
 from visual import *
 from model import *
+from server import *
 
 timer = None
 alive = True
@@ -15,8 +16,6 @@ targets = []
 tanks = []
 screen = pg.display.set_mode((window_width, window_height))
 player_tank = Tank()
-
-print("We are fucked1")
 
 FLAGS = {
             'K_w' : False,
@@ -157,11 +156,17 @@ def main():
 
             clock.tick(FPS)
 
-print("We are fucked")
-
 pg.init()
 
 nickname = new_game(screen)
 
+choice = join_create(screen)
 
-main()
+if choice == "e":
+    quit()
+elif choice == "s":
+    serv = Server()
+    serv.enter_port(screen)
+    serv.bind()
+elif choice == "c":
+    quit()
