@@ -106,7 +106,7 @@ def main():
     for i in range(100):
         IMAGES.append(pg.image.load('fractals/' + str(i) + '.png').convert_alpha())
 
-
+    slap = pg.mixer.Sound("music/slap7.ogg")
     #pg.mixer.music.load("music/evgeny-kissin-prokofiev-piano-concerto-no-3-in-c-op-26-1-andante-alleg.ogg")
     pg.mixer.music.load("music/Chicago-Symphony-Orchestra_-Sir-Georg-Solti-—-Prokofiev-Romeo-and-Juliet_-Op.-64-_-Act-1-13.ogg")
     pg.mixer.music.play(-1, 0.0)
@@ -120,7 +120,7 @@ def main():
         tanks.clear()
         targets.clear()
 
-        for i in range(round_number):
+        for i in range(100 * round_number):
             targets.append(Target(randint(world_left, world_right), randint(world_up, world_down), randint(0, 5)))
             targets.append(Target_shooting(randint(world_left, world_right), randint(world_up, world_down), randint(0, 5)))
 

@@ -261,5 +261,7 @@ class Target_shooting(Target):
         global v_bullet
         if self.charge >= 50:
             self.charge = 0
+            slap = pg.mixer.Sound("music/slap7.ogg")
+            slap.play()
             return Bullet(self.x, self.y, self.angle, v_bullet, "target")
         return 0
