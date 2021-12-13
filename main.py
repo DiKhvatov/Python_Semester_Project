@@ -1,6 +1,7 @@
 import pygame as pg
 import numpy as np
 
+
 from random import randint
 
 from constants import *
@@ -28,14 +29,8 @@ FLAGS = {
 
 
 def handle_events(events, player_tank, alive):
-    global w0
-    global v0
-    global v_bullet
-    global bullets
-    global FLAGS
-    global FPS
 
-    max_count = 10 * FPS / 120
+    max_count = 50 * FPS / 120
 
     for event in events:
         if event.type == pg.QUIT:
@@ -69,7 +64,7 @@ def handle_events(events, player_tank, alive):
     if FLAGS.get("K_w") or FLAGS.get("K_s"):
         if FLAGS.get("K_w"):
             #player_tank.v = v_tank
-            player_tank.a = 1
+            player_tank.a = 0.3
         if FLAGS.get("K_s"):
             player_tank.v = -v_tank
         if FLAGS.get("K_w") and FLAGS.get("K_s"):
@@ -89,6 +84,8 @@ def handle_events(events, player_tank, alive):
 
     if FLAGS.get("K_SPACE") and FLAGS.get("counter") > max_count:
         FLAGS.update({"counter" : 0})
+        slap = pg.mixer.Sound("music/slap7.ogg")
+        slap.play()
         bullets.append(Bullet(player_tank.x + 6/5 * player_tank.r * np.cos(player_tank.angle) , player_tank.y +
             6/5 * player_tank.r * np.sin(player_tank.angle), player_tank.angle, v_bullet + player_tank.v, "player_tank"))
 
@@ -99,21 +96,7 @@ def handle_events(events, player_tank, alive):
 
 def main():
     global alive
-    global delta
-    global timer
-    global bullets
-    global targets
-    global tanks
-    global player_tank
-    global FPS
 
-    global world_left
-    global world_right
-    global world_up
-    global world_down
-
-    global window_height
-    global window_width
 
     clock = pg.time.Clock()
     pg.init()
@@ -124,9 +107,12 @@ def main():
         IMAGES.append(pg.image.load('fractals/' + str(i) + '.png').convert_alpha())
 
 
+    #pg.mixer.music.load("music/evgeny-kissin-prokofiev-piano-concerto-no-3-in-c-op-26-1-andante-alleg.ogg")
+    pg.mixer.music.load("music/Chicago-Symphony-Orchestra_-Sir-Georg-Solti-—-Prokofiev-Romeo-and-Juliet_-Op.-64-_-Act-1-13.ogg")
+    pg.mixer.music.play(-1, 0.0)
     for round_number in range(10):
 
-        print(round_number)
+        #print(round_number)
 
         player_tank.new_round()
 
@@ -158,9 +144,10 @@ def main():
             clock.tick(FPS)
 
 pg.init()
+pg.mixer.init()
 
-nickname = new_game(screen)
-
+#nickname = new_game(screen)
+'''
 choice = join_create(screen)
 
 if choice == "e":
@@ -171,3 +158,5 @@ elif choice == "s":
     serv.bind()
 elif choice == "c":
     quit()
+'''
+main()

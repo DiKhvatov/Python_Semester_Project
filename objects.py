@@ -184,7 +184,7 @@ class Target:
         self.r = 50
         self.color = (255, 255, 0)
         self.color_2 = (255, 0, 0)
-        self.health = 25
+        self.health = 5
         self.type = "simple target"
         self.existion = True
 
@@ -261,7 +261,7 @@ class Target_shooting(Target):
         Выстрел
         '''
         global v_bullet
-        if self.charge >= 10:
+        if self.charge >= 50:
             self.charge = 0
             return Bullet(self.x, self.y, self.angle, v_bullet, "target")
         return 0

@@ -29,6 +29,7 @@ class Drawer:
         self.screen = screen
         self.counter = 0
         self.direction = 1
+        
 
 
     def update(self, player_tank, bullets, targets, tanks, screen, delta, IMAGES):
@@ -95,14 +96,11 @@ class Drawer:
 
 
 def new_game(screen):
-<<<<<<< HEAD
     font = pg.font.SysFont("Helvetica Neue", 50)
     font_medium = pg.font.SysFont("Helvetica Neue", 40)
-=======
     '''
     Функцию писал ДмитрийЁ видимо это окно с вводом имени
     '''
->>>>>>> f40dd7f0b86c0e7d7aab9ce58bc8db0306f98f90
     init = True
     Name = ""
     WIDTH = window_width
@@ -147,7 +145,7 @@ def join_create(screen):
         text_que = font.render("Who would you like to be?", False, (0, 0, 0))
         text_serv = font.render("Server", False, (0, 0, 0))
         text_cl = font.render("Client", False, (0, 0, 0))
-        
+
         screen.blit(text_que, (int(WIDTH/2 - text_que.get_width()/2), 140))
         screen.blit(text_serv, (int(WIDTH/2 - text_serv.get_width()/2), 300))
         screen.blit(text_cl, (int(WIDTH/2 - text_cl.get_width()/2), 450))
@@ -173,14 +171,5 @@ def join_create(screen):
                 event.pos[1] > 450) and (event.pos[1] < 450 + text_serv.get_height()):
                     init = False
                     choice = "c"
-    print(choice)    
+    print(choice)
     return choice
-
-
-
-
-
-
-
-
-
