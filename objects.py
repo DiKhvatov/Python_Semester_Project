@@ -5,7 +5,6 @@ from constants import *
 
 """
 Файл с описание классов элементов
-
 Bullet - класс пуль
 Tank - класс танков
 Target - класс цели
@@ -21,19 +20,12 @@ class Bullet:
     def __init__(self, x, y, shooting_angle, v, parent):
         """
         Инициализация
-
         x, y : float - положение пули
-
         angle : float - направление движения
-
         v : float - скорость пули
-
         existion : bool - флаг существования пули с неправильным написанием
-
         color : list - цвет пули
-
         r : float - размер пулм
-
         parent : string - метка класса создателя пули, чтобы она этот класс не трогала
         """
         self.x = x
@@ -49,7 +41,6 @@ class Bullet:
     def checking_breakthrough(self, tanks):
         """
         функция проверки столкновения с элементами из массива
-
         tanks : massive - массив с танками
         """
         for tank in tanks:
@@ -61,7 +52,6 @@ class Bullet:
     def move(self, delta):
         """
         Функция перемещения пули за время delta
-
         delta : float
         """
         self.x += self.v * np.cos(self.angle) * delta
@@ -70,9 +60,7 @@ class Bullet:
     def draw(self, surface, x, y):
         """
         Функция отрисовки пули на поверхности в системе отсчета танка игрока
-
         surface : Pygame.surface - поверхность для отрисовки
-
         x,y : float- подающиеся координаты
         """
         pg.draw.circle(surface, self.color, (self.x - x, self.y - y), self.r)
@@ -80,7 +68,6 @@ class Bullet:
     def wall_collision(self, wall_x_left, wall_x_right, wall_y_up, wall_y_down):
         """
         Проверка на выход пуль за пределы карты
-
         wall_x_left, wall_x_right, wall_y_up, wall_y_down : float
         """
         if (
@@ -100,23 +87,14 @@ class Tank:
     def __init__(self):
         """
         инициализация
-
         x,y : float - координаты
-
         v, a : float - скорость и ускорение
-
         w : float - частота вращения
-
         angle : float - угол поворота
-
         r : float - радиус
-
         color, color_2 : list - цвета для отрисовки элементов танка
-
         health : float - здоровье танка
-
         existion : bool - флаг существования
-
         image : pygame.surface - картинка танка
         """
         self.x = 200
@@ -135,13 +113,9 @@ class Tank:
     def move(self, delta):
         """
         Изменения скорости, координат и угла поворота за малое время delta
-
         delta : float
         """
         self.v += self.a * delta
-        if not self.existion:
-            self.v = 0
-            self.w = 0
         self.x += self.v * delta * np.cos(self.angle)
         self.y += self.v * delta * np.sin(self.angle)
         self.angle += self.w * delta
@@ -154,27 +128,7 @@ class Tank:
         """
         Отрисовка картинки танка
         автор - Батухан
-<<<<<<< HEAD
-        '''
-        image = pg.image.load('floppa.png').convert_alpha()
-        if not self.existion:
-            image = pg.image.load('floppa3.png').convert_alpha()
-        new_image = pg.transform.scale(image, (2*self.r, 2*self.r))
-        new_image = pg.transform.rotate(new_image, -90 - 180*self.angle/np.pi)
-        rot = self.angle
-        while rot >= np.pi/2:
-            rot += -np.pi/2
-        deltaX = self.r*np.sqrt(2)*np.cos(np.pi/4 + rot) + 2*np.sin(rot)*self.r - self.r
-        deltaY = self.r*np.sin(np.pi/4 + rot) - self.r
-        screen.blit(new_image, (self.x - x - 1.2*self.r - deltaX, self.y - y - 1.2*self.r - deltaY))
-
-        health = self.health/100
-        pg.draw.rect(screen, (255,0,0), (self.x - x - 1.2*self.r, self.y - y + 1.2*self.r, 2*self.r, 0.3*self.r))
-        pg.draw.rect(screen, (0,255,0), (self.x - x - 1.2*self.r, self.y - y + 1.2*self.r, health*2*self.r, 0.3*self.r))
-=======
-
         surface : pygame.surface - поверхность для отрисовки туда танка
-
         x, y : float - координаты для отрисовки с учетом смещения
         """
         image = self.image
@@ -193,14 +147,10 @@ class Tank:
             new_image,
             (self.x - x - 1.2 * self.r - deltaX, self.y - y - 1.2 * self.r - deltaY),
         )
->>>>>>> 7d3445ebc909a6c454275f969a50c932132e56ab
 
     def wall_collision(self, delta):
         """
         Просчет выхода танка за границы мира и уменьшение его здоровья
-
-<<<<<<< HEAD
-=======
         delta : float - промежуток времени
         """
         if (
@@ -211,7 +161,6 @@ class Tank:
         ):
             self.health += -0.1 * delta
 
->>>>>>> 7d3445ebc909a6c454275f969a50c932132e56ab
     def breakthrough(self):
         """
         Функция, сообщающая танку, что в него попала пуля
@@ -231,7 +180,6 @@ class Tank:
     def target_collision(self, target):
         """
         Проверка, сталкивается ли танк с целями
-
         target : class Target - цель
         """
         if (self.x - target.x) ** 2 + (self.y - target.y) ** 2 <= (
@@ -249,23 +197,14 @@ class Target:
     def __init__(self, x, y, v):
         """
         инициализация
-
         x,y : float - координаты
-
         v, a : float - скорость и ускорение
-
         w : float - частота вращения
-
         angle : float - угол поворота
-
         r : float - радиус
-
         color, color_2 : list - цвета для отрисовки элементов танка
-
         health : float - здоровье танка
-
         existion : bool - флаг существования
-
         image : pygame.surface - картинка танка
         """
         self.x = x
@@ -285,7 +224,6 @@ class Target:
     def aiming(self, tank):
         """
         Высокоинтелеллектуальный алгоритм преследования танка
-
         tank : class Tank
         """
         distance = np.sqrt((self.x - tank.x) ** 2 + (self.y - tank.y) ** 2)
@@ -305,7 +243,6 @@ class Target:
     def move(self, delta):
         """
         Изменения скорости, координат и угла поворота за малое время delta
-
         delta : float
         """
         self.v += self.a * delta
@@ -317,25 +254,7 @@ class Target:
         """
         Функция отрисовки цели
         автор - Батухан
-<<<<<<< HEAD
-        '''
-        image = pg.image.load('floppa2.png').convert_alpha()
-        new_image = pg.transform.scale(image, (2*self.r, 2*self.r))
-        new_image = pg.transform.rotate(new_image, -90 - 180*self.angle/np.pi)
-        screen.blit(new_image, (self.x - x - 1.2*self.r, self.y - y - 1.2*self.r))
-        rot = self.angle
-        while rot >= np.pi/2:
-            rot += -np.pi/2
-        deltaX = self.r*np.sqrt(2)*np.cos(np.pi/4 + rot) + 2*np.sin(rot)*self.r - self.r
-        deltaY = self.r*np.sin(np.pi/4 + rot) - self.r
-        screen.blit(new_image, (self.x - x - 1.2*self.r - deltaX, self.y - y - 1.2*self.r - deltaY))
-        health = self.health/25
-        pg.draw.rect(screen, (255,0,0), (self.x - x - 1.2*self.r, self.y - y + 1.2*self.r, 2*self.r, 0.3*self.r))
-        pg.draw.rect(screen, (0,255,0), (self.x - x - 1.2*self.r, self.y - y + 1.2*self.r, health*2*self.r, 0.3*self.r))
-=======
-
         x, y : float - координаты для смещения
-
         surface, screen : pygame.surface - Батухан идиот - испотрил функцию, времени фиксит до сдачи не остается
         """
         image = self.image
@@ -343,7 +262,6 @@ class Target:
         new_image = pg.transform.rotate(new_image, -90 - 180 * self.angle / np.pi)
         screen.blit(new_image, (self.x - x - 1.2 * self.r, self.y - y - 1.2 * self.r))
 
->>>>>>> 7d3445ebc909a6c454275f969a50c932132e56ab
 
 class Target_shooting(Target):
     """
@@ -353,11 +271,8 @@ class Target_shooting(Target):
     def __init__(self, x, y, v):
         """
         Инициализация
-
         shooting_angle : float - угол направления башни цели
-
         charge : float - заряд пушки для стрельбы
-
         type : string - тип цели чтобы различать стреляющую и обычную
         """
         super().__init__(x, y, v)
@@ -368,7 +283,6 @@ class Target_shooting(Target):
     def shoot_aiming(self, tank):
         """
         Высокоинтелеллектуальный способ прицеливания в данный танк
-
         tank : class Tank - данный танк
         """
         distance = np.sqrt((self.x - tank.x) ** 2 + (self.y - tank.y) ** 2)
@@ -380,7 +294,6 @@ class Target_shooting(Target):
     def charging(self, delta):
         """
         Зарядка для последующего выстрела
-
         delta : float
         """
         self.charge += delta
@@ -396,36 +309,3 @@ class Target_shooting(Target):
             slap.play()
             return Bullet(self.x, self.y, self.angle, v_bullet, "target")
         return 0
-
-class Walls:
-    '''
-    Класс цели
-    '''
-    def __init__(self, x, y, angle):
-        '''
-
-        '''
-        self.x = x
-        self.y = y
-        self.health = 1000
-        self.angle = angle
-        self.color = (255, 255, 0)
-        self.color_2 = (255, 0, 0)
-        self.type = "simple target"
-        self.r = 100
-        self.existion = True
-    def breakthrough(self):
-        '''
-        Сообщение цели, что в нее попала пуля
-        '''
-        self.health += -1
-        if self.health <= 0:
-            self.existion = False
-
-    def draw(self, surface, x, y, screen):
-        '''
-        Функция отрисовки цели
-        автор - Батухан
-        '''
-        if self.existion:
-            pg.draw.rect(screen, self.color, (self.x - x - 3*self.r/5, self.y -y - 3*self.r/5, 1.2*self.r, 1.2*self.r))

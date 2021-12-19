@@ -11,92 +11,6 @@ from model import *
 from server import *
 from client import *
 
-<<<<<<< HEAD
-timer = None
-alive = True
-bullets = []
-targets = []
-tanks = []
-walls = []
-screen = pg.display.set_mode((window_width, window_height))
-player_tank = Tank()
-
-FLAGS = {
-            'K_w' : False,
-            'K_a' : False,
-            'K_s' : False,
-            'K_d' : False,
-            'K_SPACE' : False,
-            'counter' : 0,
-        }
-
-
-def handle_events(events, player_tank, alive):
-    global w0
-    global v0
-    global v_bullet
-    global bullets
-    global FLAGS
-    global FPS
-
-    max_count = 10 * FPS / 120
-
-    for event in events:
-        if event.type == pg.QUIT:
-            alive = False
-        else:
-            if event.type == pg.KEYDOWN:
-                # TODO: пофиксить попеременное переключение клавиш
-                if event.key == pg.K_w:
-                    FLAGS.update({"K_w":True})
-                if event.key == pg.K_s:
-                    FLAGS.update({"K_s":True})
-                if event.key == pg.K_d:
-                    FLAGS.update({"K_d":True})
-                if event.key == pg.K_a:
-                    FLAGS.update({"K_a":True})
-                if event.key == pg.K_SPACE:
-                    FLAGS.update({"K_SPACE":True})
-
-            if event.type == pg.KEYUP:
-                if event.key == pg.K_w:
-                    FLAGS.update({"K_w" : False})
-                if event.key == pg.K_s:
-                    FLAGS.update({"K_s" : False})
-                if event.key == pg.K_a:
-                    FLAGS.update({"K_a" : False})
-                if event.key == pg.K_d:
-                    FLAGS.update({"K_d" : False})
-                if event.key == pg.K_SPACE:
-                    FLAGS.update({"K_SPACE":False})
-
-    if FLAGS.get("K_w") or FLAGS.get("K_s"):
-        if FLAGS.get("K_w"):
-            #player_tank.v = v_tank
-            player_tank.a = 1
-        if FLAGS.get("K_s"):
-            player_tank.v = -v_tank
-        if FLAGS.get("K_w") and FLAGS.get("K_s"):
-            player_tank.v = 0
-    else:
-        player_tank.v = 0
-
-    if FLAGS.get("K_a") or FLAGS.get("K_d"):
-        if FLAGS.get("K_a"):
-            player_tank.w = -w_tank
-        if FLAGS.get("K_d"):
-            player_tank.w = w_tank
-        if FLAGS.get("K_a") and FLAGS.get("K_d"):
-            player_tank.w = 0
-    else:
-        player_tank.w = 0
-
-    if FLAGS.get("K_SPACE") and FLAGS.get("counter") > max_count and player_tank.existion:
-        FLAGS.update({"counter" : 0})
-        bullets.append(Bullet(player_tank.x + 6/5 * player_tank.r * np.cos(player_tank.angle) , player_tank.y +
-            6/5 * player_tank.r * np.sin(player_tank.angle), player_tank.angle, v_bullet + player_tank.v, "player_tank"))
-=======
->>>>>>> 7d3445ebc909a6c454275f969a50c932132e56ab
 
 screen = pg.display.set_mode((window_width, window_height))
 
@@ -119,17 +33,11 @@ def main():
 
     """
     Инициализация  переменных для дальнейшего использования
-
     timer : None - таймер с временем
-
     alive : bool - флаг неоконченной игры
-
     bullets : massive - массив для записывания туда пуль
-
     targets : massive - массив для записывания туда целей
-
     tanks : massive - массив для записывания туда танков
-
     player_tank : class Tank - танк игрока
     """
 
@@ -153,11 +61,8 @@ def main():
     def handle_events(events, player_tank, alive):
         """
         Функция обработчик событий с клавиатуры и мыши
-
         events : massive : pygame.event - массив с событиями
-
         player_tank : class Tank - танк игрока для изменения его параметров
-
         alive : bool -  флаг продолжения игры
         """
 
@@ -265,14 +170,6 @@ def main():
         tanks.clear()
         targets.clear()
 
-<<<<<<< HEAD
-        for i in range(round_number):
-            targets.append(Target(randint(world_left, world_right), randint(world_up, world_down), randint(0, 5)))
-            targets.append(Target_shooting(randint(world_left, world_right), randint(world_up, world_down), randint(0, 5)))
-
-        for el in range(round_number + 5):
-            walls.append(Walls(randint(world_left, world_right), randint(world_up, world_down), randint(0, 360)))
-=======
         for i in range(100 * round_number):
             """
             Создание обычных и стреляющих целей
@@ -291,7 +188,6 @@ def main():
                     randint(0, 5),
                 )
             )
->>>>>>> 7d3445ebc909a6c454275f969a50c932132e56ab
 
         drawer = Drawer(screen)
 
@@ -301,32 +197,21 @@ def main():
 
         while alive:
 
-<<<<<<< HEAD
-            execution(delta, bullets, targets, tanks, walls, player_tank)
-=======
             execution(delta, bullets, targets, tanks, player_tank)
->>>>>>> 7d3445ebc909a6c454275f969a50c932132e56ab
             alive = handle_events(pg.event.get(), player_tank, alive)
-            drawer.update(player_tank, bullets, targets, tanks, walls, screen, delta, IMAGES)
+            drawer.update(player_tank, bullets, targets, tanks, screen, delta, IMAGES)
             if len(targets) == 0:
                 break
 
             clock.tick(FPS)
 
-<<<<<<< HEAD
-pg.init()
-'''
-nickname = new_game(screen)
-=======
 
 pg.init()
 pg.mixer.init()
 
 # nickname = new_game(screen)
 """
->>>>>>> 7d3445ebc909a6c454275f969a50c932132e56ab
 choice = join_create(screen)
-
 if choice == "e":
     quit()
 elif choice == "s":
@@ -336,10 +221,5 @@ elif choice == "s":
 elif choice == "c":
     cl = Client(nickname)
     cl.enter_menu(screen)
-<<<<<<< HEAD
-    '''
-main()
-=======
 """
 main()
->>>>>>> 7d3445ebc909a6c454275f969a50c932132e56ab

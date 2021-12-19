@@ -94,7 +94,3 @@ class Client:
 		print("Connection established")
 		self.sock.send(self.nickname.encode())
 		print(self.sock.recv(2048).decode())
-
-
-
-

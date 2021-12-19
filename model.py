@@ -4,27 +4,14 @@ import numpy as np
 from constants import *
 from objects import *
 
-<<<<<<< HEAD
-def execution(delta, bullets, targets, tanks, walls, player_tank):
-    global world_left
-    global world_right
-    global world_up
-    global world_down
-=======
->>>>>>> 7d3445ebc909a6c454275f969a50c932132e56ab
 
 def execution(delta, bullets, targets, tanks, player_tank):
     """
     Функция выполняет взаимодействие медлу объектами
-
     delta : float - разница по времени
-
     bullets : massive : class Bullet - массив с пулями
-
     targets : massive : class Target / Target_shooting - массив с целями
-
     tanks : massive : class Tank - массив с танками
-
     player_tank : class Tank - танк игрока
     """
 
@@ -38,13 +25,8 @@ def execution(delta, bullets, targets, tanks, player_tank):
         # обработка событий с пулями
         # проверка выхода за границу
         bullet.wall_collision(world_left, world_right, world_up, world_down)
-<<<<<<< HEAD
-        bullet.checking_breakthrough(walls)
-
-=======
 
         # проверка создателя и столкновения с элемнтами
->>>>>>> 7d3445ebc909a6c454275f969a50c932132e56ab
         if not bullet.parent == "tank":
             bullet.checking_breakthrough(tanks)
         if not bullet.parent == "target":

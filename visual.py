@@ -1,7 +1,7 @@
 import pygame as pg
 
 from constants import *
-from random import randint
+
 """
 Есть идея засунуть все связанное с рисованием в этот файл
 """
@@ -15,22 +15,14 @@ class Drawer:
     def __init__(self, screen):
         """
         Инициализация
-
         screen : pygame.surface - экран для отрисовки
-
         counter : float - счетчик для отрисовки фона
-
         direction : float - значения 0,1 для зацикливания картинки
         """
         self.screen = screen
         self.counter = 0
         self.direction = 1
 
-<<<<<<< HEAD
-
-    def update(self, player_tank, bullets, targets, tanks, walls, screen, delta, IMAGES):
-
-=======
     def update(self, player_tank, bullets, targets, tanks, screen, delta, IMAGES):
         """
         player_tank : class Tank - танк игрока
@@ -42,7 +34,6 @@ class Drawer:
         IMAGES : massive - массив с картинками для отрисовки изменяющегося фрактала
         Предполагается, что каждая имеет функцию отрисовки draw c одинаковыми входными параметрами
         """
->>>>>>> 7d3445ebc909a6c454275f969a50c932132e56ab
         global window_height
         global window_width
 
@@ -93,19 +84,12 @@ class Drawer:
             )
 
         for target in targets:
-<<<<<<< HEAD
-            target.draw(self.screen, player_tank.x - window_width / 2,  player_tank.y - window_width / 2, screen)
-        
-        for wall in walls:
-            wall.draw(self.screen, player_tank.x - window_width / 2,  player_tank.y - window_width / 2, screen)
-=======
             target.draw(
                 self.screen,
                 player_tank.x - window_width / 2,
                 player_tank.y - window_width / 2,
                 screen,
             )
->>>>>>> 7d3445ebc909a6c454275f969a50c932132e56ab
 
         pg.display.update()
 
@@ -113,7 +97,6 @@ class Drawer:
 def new_game(screen):
     """
     Функцию писал Дмитрий, видимо это окно с вводом имени
-
     screen : pygame.surface - экран
     """
     font = pg.font.SysFont("Helvetica Neue", 50)
