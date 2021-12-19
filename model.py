@@ -7,11 +7,16 @@ from objects import *
 
 def execution(delta, bullets, targets, tanks, player_tank):
     """
-    Функция выполняет взаимодействие медлу объектами
+    Функция выполняет взаимодействие между объектами
+
     delta : float - разница по времени
+
     bullets : massive : class Bullet - массив с пулями
+
     targets : massive : class Target / Target_shooting - массив с целями
+
     tanks : massive : class Tank - массив с танками
+
     player_tank : class Tank - танк игрока
     """
 

@@ -158,7 +158,7 @@ def main():
     )
     pg.mixer.music.play(-1, 0.0)
 
-    for round_number in range(1):
+    for round_number in range(6):
         """
         Цикл с раундами
         """
