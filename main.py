@@ -170,7 +170,7 @@ def main():
         tanks.clear()
         targets.clear()
 
-        for i in range(100 * round_number):
+        for i in range(1 * round_number):
             """
             Создание обычных и стреляющих целей
             """
