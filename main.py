@@ -1,5 +1,6 @@
 import pygame as pg
 import numpy as np
+import json
 
 
 from random import randint
@@ -13,6 +14,9 @@ from client import *
 
 
 screen = pg.display.set_mode((window_width, window_height))
+IMAGES = []
+for i in range(100):
+    IMAGES.append(pg.image.load("fractals/" + str(i) + ".png").convert_alpha())
 
 
 def client_init():
@@ -145,9 +149,6 @@ def main():
     screen = pg.display.set_mode((window_width, window_height))
 
     # загрузка картинок для фона
-    IMAGES = []
-    for i in range(100):
-        IMAGES.append(pg.image.load("fractals/" + str(i) + ".png").convert_alpha())
 
     # Загрузка внутриигровой музыки
     slap = pg.mixer.Sound("music/slap7.ogg")
@@ -157,7 +158,7 @@ def main():
     )
     pg.mixer.music.play(-1, 0.0)
 
-    for round_number in range(10):
+    for round_number in range(1):
         """
         Цикл с раундами
         """
@@ -206,10 +207,92 @@ def main():
             clock.tick(FPS)
 
 
+def ending(name, score):
+    '''
+    Функция выводит таблицу лидеров
+
+    name : string - имя игрока
+
+    score : float - очки игрока
+    '''
+
+    font = pg.font.Font(None, 72)
+    #loading all results
+    with open("winners_data.json", "r") as write_file:
+        loaded = json.load(write_file)
+    #adding player results
+    loaded.append( {'name': name, 'points': score } )
+
+    #sorting all results
+    for i in range(len(loaded) - 1 ):
+        k = i
+        for j in ( i + 1 , len(loaded) - 1):
+            dict1 = loaded[k]
+            dict2 = loaded[j]
+            if dict1.get('points', 0) < dict2.get('points', 0): k = j
+        c = loaded[k]
+        loaded[k] = loaded[i]
+        loaded[i] = c
+    #writing results to file
+    with open("winners_data.json", "w") as write_file:
+        json.dump(loaded,  write_file)
+
+    finished = False
+    counter = 0
+    direction = 1
+    delta = 0.1 * FPS / 12
+    rect_x = -window_width / 2
+    rect_y = -window_height / 2
+    clock = pg.time.Clock()
+    lenght = 0
+
+    texts = []
+    text_surface = pg.Surface((window_width, window_height))
+
+    text1 = font.render("YOU WON! CONGRATULATIONS!", True, (0, 100, 0))
+    text_surface.blit(text1,(200,800))
+
+    with open("winners_data.json", "r") as write_file:
+        loaded = json.load(write_file)
+        lenght = min(len(loaded) , 5)
+    for i in range(lenght):
+        texts.append(font.render( loaded[i].get('name', 0) + "   " + str(loaded[i].get('points', 0)), True, (0, 100, 0)))
+        text_surface.blit(texts[i],(200 , 100 + i * 100))
+
+    while not finished:
+
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                finished = True
+
+            screen.fill((0, 0, 0))
+
+            pg.Surface.blit(screen, IMAGES[int(counter)], (rect_x, rect_y))
+
+            if direction == 1:
+                counter += delta * 0.3
+            else:
+                counter -= delta * 0.3
+
+            if counter >= 99:
+                direction = 0
+
+            if counter <= 0:
+                direction = 1
+
+            #writing results of 5 best players on the screen
+
+            screen.blit(text_surface, (0, 0))
+
+
+            pg.display.update()
+            clock.tick(FPS)
+
+
 pg.init()
 pg.mixer.init()
 
-# nickname = new_game(screen)
+nickname = new_game(screen)
 """
 choice = join_create(screen)
 if choice == "e":
@@ -223,3 +306,5 @@ elif choice == "c":
     cl.enter_menu(screen)
 """
 main()
+
+ending(nickname, 1)
