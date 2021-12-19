@@ -17,6 +17,7 @@ screen = pg.display.set_mode((window_width, window_height))
 IMAGES = []
 for i in range(100):
     IMAGES.append(pg.image.load("fractals/" + str(i) + ".png").convert_alpha())
+scores = 0
 
 
 def client_init():
@@ -164,6 +165,8 @@ def main():
         """
         if not alive:
             break
+
+        scores = round_number
 
         player_tank.new_round()
 
