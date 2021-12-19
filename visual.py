@@ -1,7 +1,7 @@
 import pygame as pg
 
 from constants import *
-
+from random import randint
 """
 Есть идея засунуть все связанное с рисованием в этот файл
 """
@@ -19,7 +19,7 @@ class Drawer:
         self.direction = 1
 
 
-    def update(self, player_tank, bullets, targets, tanks, screen, delta, IMAGES):
+    def update(self, player_tank, bullets, targets, tanks, walls, screen, delta, IMAGES):
 
         global window_height
         global window_width
@@ -58,6 +58,9 @@ class Drawer:
 
         for target in targets:
             target.draw(self.screen, player_tank.x - window_width / 2,  player_tank.y - window_width / 2, screen)
+        
+        for wall in walls:
+            wall.draw(self.screen, player_tank.x - window_width / 2,  player_tank.y - window_width / 2, screen)
 
         pg.display.update()
 

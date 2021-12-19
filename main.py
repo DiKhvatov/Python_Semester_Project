@@ -15,6 +15,7 @@ alive = True
 bullets = []
 targets = []
 tanks = []
+walls = []
 screen = pg.display.set_mode((window_width, window_height))
 player_tank = Tank()
 
@@ -88,7 +89,7 @@ def handle_events(events, player_tank, alive):
     else:
         player_tank.w = 0
 
-    if FLAGS.get("K_SPACE") and FLAGS.get("counter") > max_count:
+    if FLAGS.get("K_SPACE") and FLAGS.get("counter") > max_count and player_tank.existion:
         FLAGS.update({"counter" : 0})
         bullets.append(Bullet(player_tank.x + 6/5 * player_tank.r * np.cos(player_tank.angle) , player_tank.y +
             6/5 * player_tank.r * np.sin(player_tank.angle), player_tank.angle, v_bullet + player_tank.v, "player_tank"))
@@ -148,8 +149,8 @@ def main():
             targets.append(Target(randint(world_left, world_right), randint(world_up, world_down), randint(0, 5)))
             targets.append(Target_shooting(randint(world_left, world_right), randint(world_up, world_down), randint(0, 5)))
 
-
-
+        for el in range(round_number + 5):
+            walls.append(Walls(randint(world_left, world_right), randint(world_up, world_down), randint(0, 360)))
 
         drawer = Drawer(screen)
 
@@ -159,18 +160,17 @@ def main():
         delta = 0.1 * FPS / 12
         while alive:
 
-            execution(delta, bullets, targets,  tanks, player_tank)
+            execution(delta, bullets, targets, tanks, walls, player_tank)
             alive = handle_events(pg.event.get(), player_tank, alive)
-            drawer.update(player_tank, bullets, targets, tanks, screen, delta, IMAGES)
+            drawer.update(player_tank, bullets, targets, tanks, walls, screen, delta, IMAGES)
             if len(targets) == 0:
                 break
 
             clock.tick(FPS)
 
 pg.init()
-
+'''
 nickname = new_game(screen)
-
 choice = join_create(screen)
 
 if choice == "e":
@@ -182,4 +182,5 @@ elif choice == "s":
 elif choice == "c":
     cl = Client(nickname)
     cl.enter_menu(screen)
-
+    '''
+main()

@@ -105,6 +105,9 @@ class Tank:
         Изменения скорости, координат и угла поворота за малое время delta
         """
         self.v += self.a * delta
+        if not self.existion:
+            self.v = 0
+            self.w = 0
         self.x += self.v * delta * np.cos(self.angle)
         self.y += self.v * delta * np.sin(self.angle)
         self.angle += self.w * delta
@@ -120,6 +123,8 @@ class Tank:
         автор - Батухан
         '''
         image = pg.image.load('floppa.png').convert_alpha()
+        if not self.existion:
+            image = pg.image.load('floppa3.png').convert_alpha()
         new_image = pg.transform.scale(image, (2*self.r, 2*self.r))
         new_image = pg.transform.rotate(new_image, -90 - 180*self.angle/np.pi)
         rot = self.angle
@@ -129,6 +134,9 @@ class Tank:
         deltaY = self.r*np.sin(np.pi/4 + rot) - self.r
         screen.blit(new_image, (self.x - x - 1.2*self.r - deltaX, self.y - y - 1.2*self.r - deltaY))
 
+        health = self.health/100
+        pg.draw.rect(screen, (255,0,0), (self.x - x - 1.2*self.r, self.y - y + 1.2*self.r, 2*self.r, 0.3*self.r))
+        pg.draw.rect(screen, (0,255,0), (self.x - x - 1.2*self.r, self.y - y + 1.2*self.r, health*2*self.r, 0.3*self.r))
 
     def wall_collision(self, delta):
         '''
@@ -138,7 +146,6 @@ class Tank:
             self.health += -0.1 * delta
             #print(self.health)
             pass
-
 
     def breakthrough(self):
         '''
@@ -228,7 +235,15 @@ class Target:
         new_image = pg.transform.scale(image, (2*self.r, 2*self.r))
         new_image = pg.transform.rotate(new_image, -90 - 180*self.angle/np.pi)
         screen.blit(new_image, (self.x - x - 1.2*self.r, self.y - y - 1.2*self.r))
-
+        rot = self.angle
+        while rot >= np.pi/2:
+            rot += -np.pi/2
+        deltaX = self.r*np.sqrt(2)*np.cos(np.pi/4 + rot) + 2*np.sin(rot)*self.r - self.r
+        deltaY = self.r*np.sin(np.pi/4 + rot) - self.r
+        screen.blit(new_image, (self.x - x - 1.2*self.r - deltaX, self.y - y - 1.2*self.r - deltaY))
+        health = self.health/25
+        pg.draw.rect(screen, (255,0,0), (self.x - x - 1.2*self.r, self.y - y + 1.2*self.r, 2*self.r, 0.3*self.r))
+        pg.draw.rect(screen, (0,255,0), (self.x - x - 1.2*self.r, self.y - y + 1.2*self.r, health*2*self.r, 0.3*self.r))
 
 class Target_shooting(Target):
     '''
@@ -265,3 +280,36 @@ class Target_shooting(Target):
             self.charge = 0
             return Bullet(self.x, self.y, self.angle, v_bullet, "target")
         return 0
+
+class Walls:
+    '''
+    Класс цели
+    '''
+    def __init__(self, x, y, angle):
+        '''
+
+        '''
+        self.x = x
+        self.y = y
+        self.health = 1000
+        self.angle = angle
+        self.color = (255, 255, 0)
+        self.color_2 = (255, 0, 0)
+        self.type = "simple target"
+        self.r = 100
+        self.existion = True
+    def breakthrough(self):
+        '''
+        Сообщение цели, что в нее попала пуля
+        '''
+        self.health += -1
+        if self.health <= 0:
+            self.existion = False
+
+    def draw(self, surface, x, y, screen):
+        '''
+        Функция отрисовки цели
+        автор - Батухан
+        '''
+        if self.existion:
+            pg.draw.rect(screen, self.color, (self.x - x - 3*self.r/5, self.y -y - 3*self.r/5, 1.2*self.r, 1.2*self.r))

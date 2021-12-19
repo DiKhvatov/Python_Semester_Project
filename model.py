@@ -4,7 +4,7 @@ import numpy as np
 from constants import *
 from objects import *
 
-def execution(delta, bullets, targets,  tanks, player_tank):
+def execution(delta, bullets, targets, tanks, walls, player_tank):
     global world_left
     global world_right
     global world_up
@@ -16,6 +16,8 @@ def execution(delta, bullets, targets,  tanks, player_tank):
 
     for bullet in bullets:
         bullet.wall_collision(world_left, world_right, world_up, world_down)
+        bullet.checking_breakthrough(walls)
+
         if not bullet.parent == "tank":
             bullet.checking_breakthrough(tanks)
         if not bullet.parent == "target":
