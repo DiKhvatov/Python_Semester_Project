@@ -57,8 +57,8 @@ class Server:
 			lb = 700
 
 
-			for name in self.list_of_clients
-
+			for name in self.list_of_clients:
+				pass
 
 
 			pg.display.update()
@@ -108,6 +108,5 @@ class Server:
 		print("Your port is now " + str(port))
 		self.PORT = int(port)
 
-
-
-
+	def lobby_serv(self, screen):
+		pass

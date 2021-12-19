@@ -6,7 +6,7 @@ world_down = 1000
 FPS = 60
 v_tank = 8
 w_tank = 0.1
-v_bullet = 10
+v_bullet = 50
 window_height = 1000
 window_width = 1000
 
