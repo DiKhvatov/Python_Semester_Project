@@ -22,6 +22,8 @@ def execution(delta, bullets, targets, tanks, player_tank):
 
     # проверяем выход за границы карты
     player_tank.wall_collision(delta)
+    if player_tank.health < 0:
+        player_tank.existion = False
 
     # передвижение танка игрока
     player_tank.move(delta)

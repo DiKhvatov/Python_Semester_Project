@@ -147,6 +147,7 @@ class Tank:
             new_image,
             (self.x - x - 1.2 * self.r - deltaX, self.y - y - 1.2 * self.r - deltaY),
         )
+        pg.draw.rect(screen, (255, 0, 0), (self.x - x - 50, self.y - y - self.r, self.health, 5))
 
     def wall_collision(self, delta):
         """
