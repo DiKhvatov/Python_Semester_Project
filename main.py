@@ -189,7 +189,7 @@ def main():
                 Target_shooting(
                     randint(world_left, world_right),
                     randint(world_up, world_down),
-                    randint(0, 5),
+                    randint(1, 5),
                 )
             )
 
@@ -223,7 +223,7 @@ def ending(name, score):
 
     font = pg.font.Font(None, 72)
     #loading all results
-    with open("winners_data.json", "r") as write_file:
+    with open("info/winners_data.json", "r") as write_file:
         loaded = json.load(write_file)
     #adding player results
     loaded.append( {'name': name, 'points': score } )
@@ -240,7 +240,7 @@ def ending(name, score):
         loaded[i] = c
 
     #writing results to file
-    with open("winners_data.json", "w") as write_file:
+    with open("info/winners_data.json", "w") as write_file:
         json.dump(loaded,  write_file)
 
     finished = False
@@ -258,7 +258,7 @@ def ending(name, score):
     text1 = font.render("YOU WON! CONGRATULATIONS!", True, (0, 100, 0))
     text_surface.blit(text1,(200,800))
 
-    with open("winners_data.json", "r") as write_file:
+    with open("info/winners_data.json", "r") as write_file:
         loaded = json.load(write_file)
         lenght = min(len(loaded) , 5)
     for i in range(lenght):
