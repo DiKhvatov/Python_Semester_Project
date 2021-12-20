@@ -108,7 +108,7 @@ class Tank:
         self.color_2 = (255, 0, 0)
         self.health = 100
         self.existion = True
-        self.image = pg.image.load("images/floppa.png").convert_alpha()
+        self.image = pg.image.load("images/Tank.png").convert_alpha()
 
     def move(self, delta):
         """
@@ -133,7 +133,7 @@ class Tank:
         """
         image = self.image
         new_image = pg.transform.scale(image, (2 * self.r, 2 * self.r))
-        new_image = pg.transform.rotate(new_image, -90 - 180 * self.angle / np.pi)
+        new_image = pg.transform.rotate(new_image, -90 - 90 - 180 * self.angle / np.pi)
         rot = self.angle
         while rot >= np.pi / 2:
             rot += -np.pi / 2
@@ -219,7 +219,7 @@ class Target:
         self.health = 5
         self.type = "simple target"
         self.existion = True
-        self.image = pg.image.load("images/floppa1.png").convert_alpha()
+        self.image = pg.image.load("images/tank1.png").convert_alpha()
 
     def aiming(self, tank):
         """
@@ -259,7 +259,7 @@ class Target:
         """
         image = self.image
         new_image = pg.transform.scale(image, (2 * self.r, 2 * self.r))
-        new_image = pg.transform.rotate(new_image, -90 - 180 * self.angle / np.pi)
+        new_image = pg.transform.rotate(new_image, 180 -90 - 180 * self.angle / np.pi)
         screen.blit(new_image, (self.x - x - 1.2 * self.r, self.y - y - 1.2 * self.r))
 
 

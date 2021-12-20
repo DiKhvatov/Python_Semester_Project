@@ -17,7 +17,6 @@ screen = pg.display.set_mode((window_width, window_height))
 IMAGES = []
 for i in range(100):
     IMAGES.append(pg.image.load("fractals/" + str(i) + ".png").convert_alpha())
-scores = 0
 
 
 def client_init():
@@ -52,6 +51,7 @@ def main():
     targets = []
     tanks = []
     player_tank = Tank()
+    score = 0
 
     # словарь с клавишами и их флагами
     FLAGS = {
@@ -159,14 +159,14 @@ def main():
     )
     pg.mixer.music.play(-1, 0.0)
 
-    for round_number in range(6):
+    for round_number in range(25):
         """
         Цикл с раундами
         """
         if not alive:
             break
 
-        scores = round_number
+        score = round_number
 
         player_tank.new_round()
 
@@ -182,7 +182,7 @@ def main():
                 Target(
                     randint(world_left, world_right),
                     randint(world_up, world_down),
-                    randint(0, 5),
+                    randint(1, 6),
                 )
             )
             targets.append(
@@ -206,8 +206,10 @@ def main():
             drawer.update(player_tank, bullets, targets, tanks, screen, delta, IMAGES)
             if len(targets) == 0:
                 break
-
+            if player_tank.existion == False:
+                alive = False
             clock.tick(FPS)
+    return score
 
 
 def ending(name, score):
@@ -236,6 +238,7 @@ def ending(name, score):
         c = loaded[k]
         loaded[k] = loaded[i]
         loaded[i] = c
+
     #writing results to file
     with open("winners_data.json", "w") as write_file:
         json.dump(loaded,  write_file)
@@ -308,6 +311,6 @@ elif choice == "c":
     cl = Client(nickname)
     cl.enter_menu(screen)
 """
-main()
+scores = main()
 
-ending(nickname, 1)
+ending(nickname, scores)
