@@ -147,7 +147,9 @@ class Tank:
             new_image,
             (self.x - x - 1.2 * self.r - deltaX, self.y - y - 1.2 * self.r - deltaY),
         )
-        pg.draw.rect(screen, (255, 0, 0), (self.x - x - 50, self.y - y - self.r, self.health, 5))
+        pg.draw.rect(
+            screen, (255, 0, 0), (self.x - x - 50, self.y - y - self.r, self.health, 5)
+        )
 
     def wall_collision(self, delta):
         """
@@ -260,7 +262,7 @@ class Target:
         """
         image = self.image
         new_image = pg.transform.scale(image, (2 * self.r, 2 * self.r))
-        new_image = pg.transform.rotate(new_image, 180 -90 - 180 * self.angle / np.pi)
+        new_image = pg.transform.rotate(new_image, 180 - 90 - 180 * self.angle / np.pi)
         screen.blit(new_image, (self.x - x - 1.2 * self.r, self.y - y - 1.2 * self.r))
 
 
